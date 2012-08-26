@@ -1,0 +1,6 @@
+[submodule "BukkitTools"]
+	path = BukkitTools
+	url = github:paul-oreilly/BukkitTools
+[submodule "mcMMO"]
+	path = mcMMO
+	url = https://github.com/mcMMO-Dev/mcMMO.git

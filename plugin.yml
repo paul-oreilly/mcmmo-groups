@@ -1,0 +1,25 @@
+main: com.oreilly.mmogroup.MMOGroup
+author: Paul O'Reilly
+name: MMO Groups
+version: 0.2
+depend: [mcMMO, Vault]
+
+commands:
+    mmogroup:
+        description: main command group
+        usage: use /mmogroup ? for help
+
+permissions:
+    mmogroup.join:
+        description: Allows a player to join a group
+        default: op
+    mmogroup.specialise:
+        description: Allows a player, when reaching a given power level, to specialise in a skill
+        default: op
+    mmogroup.change:
+        description: Allows a player to change what group they are in
+        default: op
+    mmogroup.admin:
+        description: Allows a player to change settings for the plugin
+        default: op
+        

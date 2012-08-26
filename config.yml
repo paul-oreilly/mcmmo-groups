@@ -1,0 +1,3 @@
+defaults:
+  teleportOnJoiningGroup: true
+  specialisationBonus: 3
