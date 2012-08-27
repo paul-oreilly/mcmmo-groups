@@ -1,9 +1,9 @@
 package com.oreilly.mmogroup.interaction;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.helpers.Choices;
-import com.oreilly.common.text.VariablePrefixer;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.interaction.admin.CreateGroup;
 import com.oreilly.mmogroup.interaction.admin.DeleteGroup;
 import com.oreilly.mmogroup.interaction.admin.ModifyGroup;

@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 import org.apache.commons.lang.WordUtils;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.api.PlayerAPI;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 

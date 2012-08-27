@@ -2,11 +2,11 @@ package com.oreilly.mmogroup.interaction;
 
 import org.apache.commons.lang.WordUtils;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.error.AbortInteraction;
-import com.oreilly.common.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.MMOGroup;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 
 
 public class SelectGroup extends InteractionPage {

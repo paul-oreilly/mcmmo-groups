@@ -2,13 +2,13 @@ package com.oreilly.mmogroup.interaction.admin;
 
 import java.util.HashMap;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.error.ContextDataRequired;
-import com.oreilly.common.interaction.text.error.GeneralInteractionError;
-import com.oreilly.common.interaction.text.validator.DoubleValidator;
-import com.oreilly.common.io.Numbers;
 import com.oreilly.mmogroup.MMOGroup;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.validator.DoubleValidator;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
 
 
 public class ChangeDefaultSpecialisationBonus extends InteractionPage {

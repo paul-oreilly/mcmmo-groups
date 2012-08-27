@@ -11,9 +11,9 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.nossr50.mcMMO;
-import com.oreilly.common.interaction.text.InteractionFactory;
-import com.oreilly.common.interaction.text.formatter.Border;
 import com.oreilly.mmogroup.api.PlayerAPI;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionFactory;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.Border;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.AdminMenu;
 import com.oreilly.mmogroup.interaction.AdminPlayerMenu;
@@ -41,6 +41,7 @@ public class MMOGroup extends JavaPlugin {
 	public Groups groups = null;
 	public IO io = null;
 	public PluginLogger log = null;
+	public Translations translations = null;
 	public InteractionFactory interactionFactory = null;
 	
 	
@@ -65,6 +66,7 @@ public class MMOGroup extends JavaPlugin {
 		io = new IO( this );
 		groups = new Groups( this );
 		players = new Players( this );
+		translations = new Translations( this );
 		
 		// load information from files
 		io.loadAll();

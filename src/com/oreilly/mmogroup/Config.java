@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.oreilly.common.io.Numbers;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
 
 
 public class Config {
@@ -34,6 +34,8 @@ public class Config {
 		groupDataFile = new File( plugin.getDataFolder() + File.separator + "groups.yml" );
 		playerDataFile = new File( plugin.getDataFolder() + File.separator + "players.yml" );
 		translationDirectory = new File( plugin.getDataFolder() + File.separator + "translations" );
+		if ( !translationDirectory.exists() )
+			translationDirectory.mkdirs();
 		
 		// load config variables
 		String specialisationString = configFile.getString( ConfigConstants.specialisationBonus, "3" );

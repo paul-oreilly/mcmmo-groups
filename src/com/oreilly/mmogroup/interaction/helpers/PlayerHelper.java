@@ -9,11 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.gmail.nossr50.datatypes.PlayerProfile;
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.MMOGroup;
 import com.oreilly.mmogroup.PlayerRecord;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.interaction.Constants;
 
 

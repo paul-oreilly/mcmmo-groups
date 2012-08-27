@@ -9,9 +9,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.gmail.nossr50.datatypes.SkillType;
-import com.oreilly.common.io.Locations;
-import com.oreilly.common.io.Numbers;
-import com.oreilly.common.io.Yaml;
+import com.oreilly.mmogroup.bukkitTools.io.Locations;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
+import com.oreilly.mmogroup.bukkitTools.io.Yaml;
 
 
 public class IO {

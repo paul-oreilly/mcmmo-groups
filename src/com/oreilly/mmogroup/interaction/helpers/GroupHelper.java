@@ -10,11 +10,11 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Location;
 
 import com.gmail.nossr50.datatypes.SkillType;
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.error.ContextDataRequired;
-import com.oreilly.common.io.Numbers;
 import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.MMOGroup;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
 import com.oreilly.mmogroup.interaction.Constants;
 
 

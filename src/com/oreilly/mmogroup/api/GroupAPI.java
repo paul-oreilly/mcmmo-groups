@@ -6,9 +6,9 @@ import java.util.Set;
 import org.bukkit.Location;
 
 import com.gmail.nossr50.datatypes.SkillType;
-import com.oreilly.common.io.Numbers;
 import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.MMOGroup;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 
 

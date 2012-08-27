@@ -2,13 +2,13 @@ package com.oreilly.mmogroup.interaction;
 
 import java.util.HashMap;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.error.AbortInteraction;
-import com.oreilly.common.interaction.text.helpers.Choices;
-import com.oreilly.common.io.Numbers;
-import com.oreilly.common.text.VariablePrefixer;
 import com.oreilly.mmogroup.MMOGroup;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.io.Numbers;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.interaction.admin.ChangeDefaultSpecialisationBonus;
 import com.oreilly.mmogroup.interaction.admin.ToggleAutomaticTeleporting;
 

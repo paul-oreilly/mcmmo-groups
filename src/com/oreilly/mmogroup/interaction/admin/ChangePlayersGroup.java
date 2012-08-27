@@ -2,14 +2,14 @@ package com.oreilly.mmogroup.interaction.admin;
 
 import java.util.HashMap;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.error.AbortInteraction;
-import com.oreilly.common.interaction.text.error.ContextDataRequired;
-import com.oreilly.common.interaction.text.error.GeneralInteractionError;
-import com.oreilly.common.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.api.GroupAPI;
 import com.oreilly.mmogroup.api.PlayerAPI;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 

@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import com.oreilly.common.interaction.text.Interaction;
-import com.oreilly.common.interaction.text.InteractionPage;
-import com.oreilly.common.interaction.text.error.AbortInteraction;
-import com.oreilly.common.interaction.text.helpers.Choice;
-import com.oreilly.common.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choice;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 
 
 public class SelectPlayer extends InteractionPage {
