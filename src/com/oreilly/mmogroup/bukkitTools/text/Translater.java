@@ -27,15 +27,19 @@ public class Translater {
 			List< String > inheritsFrom = config.getStringList( TranslationFileConstants.inherits );
 			ConfigurationSection content = config.getConfigurationSection( TranslationFileConstants.content );
 			if ( ( name != null ) & ( content != null ) ) {
-				errorLog.info( "Creating translation " + name );
 				TranslationRecord record = new TranslationRecord( name );
 				translations.put( name, record );
 				if ( inheritsFrom != null )
 					record.inheritsFrom.addAll( inheritsFrom );
-				for ( String key : content.getKeys( false ) ) {
-					record.rawTranslations.put( key, content.getString( key ) );
-					// DEBUG:
-					errorLog.info( "Key: " + key + " -> " + content.getString( key ) );
+				for ( String key : content.getKeys( true ) ) {
+					Object item = content.get( key );
+					// DEBUG
+					System.out.println( "Translation item (" + item.getClass().getSimpleName() + "): " +
+							item.toString() );
+					if ( ( item instanceof String ) | ( item instanceof Double ) | ( item instanceof Integer ) ) {
+						record.rawTranslations.put( key, item.toString() );
+						System.out.println( "Added item." );
+					}
 				}
 			}
 		}

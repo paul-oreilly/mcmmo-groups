@@ -12,8 +12,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.nossr50.mcMMO;
 import com.oreilly.mmogroup.api.PlayerAPI;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionFactory;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.Border;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.ClearChat;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.AdminMenu;
 import com.oreilly.mmogroup.interaction.AdminPlayerMenu;
@@ -77,13 +79,18 @@ public class MMOGroup extends JavaPlugin {
 		// link into vault for getting permission information
 		loadPermissions();
 		
+		// set up event hook for interactions if required
+		Interaction.registerEventListener( this );
+		
 		// create a new interface factory
 		// no pages - those can be added depending on which command is used.
 		interactionFactory = new InteractionFactory()
 				.withExitSequence( "exit", "quit" )
 				.withReturnSequence( "return" )
 				.withFormatter( new Border() )
-				.withTimeout( 20 );
+				.withFormatter( new ClearChat() )
+				.withTimeout( 20 )
+				.withTranslation( translations.translater, "default" ); // TODO: Use value from config
 		
 		// TODO: Commands
 		

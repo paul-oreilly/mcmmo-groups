@@ -16,7 +16,7 @@ public class Translations {
 		this.plugin = plugin;
 		translater = new Translater( plugin.config.translationDirectory, plugin.log );
 		// DEBUG:
-		HashMap< String, String > defaultTranslations = getTranslations( "default" );
+		HashMap< String, String > defaultTranslations = getTranslations();
 		if ( defaultTranslations == null )
 			MMOGroup.instance.log.log( Level.SEVERE, "No default translation found" );
 		else {

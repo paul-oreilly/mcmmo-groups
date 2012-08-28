@@ -17,8 +17,6 @@ import com.oreilly.mmogroup.interaction.players.LeaveGroup;
 public class MainMenu extends InteractionPage {
 	
 	public MainMenu() {
-		// DEBUG
-		System.out.println( "Init of main menu" );
 		autoPage();
 		hasChoices = true;
 	}
