@@ -2,8 +2,6 @@ package com.oreilly.mmogroup.interaction.players;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang.WordUtils;
-
 import com.oreilly.mmogroup.api.GroupAPI;
 import com.oreilly.mmogroup.api.PlayerAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
@@ -37,7 +35,7 @@ public class JoinGroup extends InteractionPage {
 		Choices choices = new Choices( this, interaction );
 		try {
 			for ( String groupName : GroupAPI.getAllGroupNames() )
-				choices.addInternalChoice( WordUtils.capitalize( groupName ), groupName );
+				choices.addInternalChoice( groupName, groupName );
 		} catch ( PluginNotEnabled e ) {
 			e.printStackTrace();
 		}

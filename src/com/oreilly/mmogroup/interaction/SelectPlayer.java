@@ -40,9 +40,7 @@ public class SelectPlayer extends InteractionPage {
 		// add active players to the front of the list..
 		for ( Player player : Bukkit.getOnlinePlayers() ) {
 			playerName = player.getName();
-			Choice choice = choices.addInternalChoice( WordUtils.capitalize( playerName ), playerName )
-					.withAlias( WordUtils.capitalize( playerName ) )
-					.withAlias( playerName.toLowerCase() );
+			Choice choice = choices.addInternalChoice( playerName, playerName );
 			String shortName = playerName.toLowerCase().substring( 0, 2 );
 			if ( shortNames.contains( shortName ) ) {
 				choice.withAlias( shortName ).withAlias( WordUtils.capitalize( shortName ) );
@@ -51,9 +49,7 @@ public class SelectPlayer extends InteractionPage {
 		// add offline players at the end of the list
 		for ( OfflinePlayer player : Bukkit.getOfflinePlayers() ) {
 			playerName = player.getName();
-			choices.addInternalChoice( WordUtils.capitalize( playerName ) + " (offline)", playerName )
-					.withAlias( WordUtils.capitalize( playerName ) )
-					.withAlias( playerName.toLowerCase() );
+			choices.addInternalChoice( playerName + " (offline)", playerName );
 		}
 		return choices;
 	}

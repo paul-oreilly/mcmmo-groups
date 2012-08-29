@@ -34,7 +34,7 @@ public class GroupSelectBonus extends InteractionPage {
 		for ( SkillType skill : existingBonuses ) {
 			if ( skill == SkillType.ALL )
 				continue;
-			choices.addInternalChoice( WordUtils.capitalize( skill.toString() ), skill.toString() );
+			choices.addInternalChoice( WordUtils.capitalizeFully( skill.toString() ), skill.toString() );
 		}
 		// add a 'cancel' choice as well
 		choices.addInternalChoice( "Cancel", "cancel" );

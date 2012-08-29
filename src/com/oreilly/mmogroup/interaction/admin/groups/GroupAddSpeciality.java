@@ -46,7 +46,7 @@ public class GroupAddSpeciality extends InteractionPage {
 				continue;
 			if ( existingSpecialities.contains( skill ) )
 				continue;
-			choices.addInternalChoice( WordUtils.capitalize( skill.toString() ), skill.toString() );
+			choices.addInternalChoice( WordUtils.capitalizeFully( skill.toString() ), skill.toString() );
 		}
 		// add a 'cancel' choice as well
 		choices.addInternalChoice( "Cancel", "cancel" );
@@ -64,10 +64,10 @@ public class GroupAddSpeciality extends InteractionPage {
 					"\"" );
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
-			GroupAPI.addSpecialityOption( helper.record, selected, WordUtils.capitalize( selectedSkillName ),
+			GroupAPI.addSpecialityOption( helper.record, selected, WordUtils.capitalizeFully( selectedSkillName ),
 					MMOGroup.instance.config.minPowerLevelForSpecialisation,
 					MMOGroup.instance.config.specialisationBonus );
-			interaction.context.put( Constants.SELECTED_GROUP_SPECIAL, selectedSkillName );
+			interaction.context.put( Constants.SELECTED_GROUP_SPECIAL, WordUtils.capitalizeFully( selectedSkillName ) );
 			return "New speciality created for " + selectedSkillName.toLowerCase();
 		} catch ( PluginNotEnabled error ) {
 			throw new GeneralInteractionError( "Plugin not enabled" );

@@ -50,7 +50,7 @@ public class GroupModifySpecialSkill extends InteractionPage {
 				continue;
 			if ( existingSpecialities.contains( skill ) )
 				continue;
-			choices.addInternalChoice( WordUtils.capitalize( skill.toString() ), skill.toString() );
+			choices.addInternalChoice( WordUtils.capitalizeFully( skill.toString() ), skill.toString() );
 		}
 		// add a 'cancel' choice as well
 		choices.addInternalChoice( "Cancel", "cancel" );

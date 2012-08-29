@@ -32,7 +32,7 @@ public class ChooseSpeciality extends InteractionPage {
 		Choices choices = new Choices( this, interaction );
 		PlayerHelper helper = new PlayerHelper( interaction );
 		for ( String name : helper.getEligableSpecialityOptions() )
-			choices.addInternalChoice( WordUtils.capitalize( name ), name );
+			choices.addInternalChoice( WordUtils.capitalizeFully( name ), name );
 		choices.addInternalChoice( "Cancel", "cancel" );
 		return choices;
 	}

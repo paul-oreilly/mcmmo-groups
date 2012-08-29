@@ -37,6 +37,8 @@ public class GroupModifyBonus extends InteractionPage {
 		// sets the new bonus factor for the selected skill
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
+			// DEBUG:
+			System.out.println( "DEBUG: GroupModifyBonus - value is " + data );
 			GroupAPI.setBonusAmount( helper.record, helper.selectedSkill, (Double)data );
 			return "The experience for " + helper.selectedSkill.toString().toLowerCase() + " is now set at " +
 					Numbers.doubleAsPercentage( (Double)data, 2 );

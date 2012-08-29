@@ -9,6 +9,7 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
+import com.oreilly.mmogroup.interaction.Constants;
 
 
 public class CreateGroup extends InteractionPage {
@@ -34,6 +35,7 @@ public class CreateGroup extends InteractionPage {
 	public String acceptValidatedInput( Interaction interaction, Object data ) throws GeneralInteractionError {
 		try {
 			GroupAPI.createGroup( data.toString() );
+			interaction.context.put( Constants.SELECTED_GROUP, data.toString() );
 			return "A new group has been created (" + data.toString() + ")";
 		} catch ( PluginNotEnabled e ) {
 			e.printStackTrace();

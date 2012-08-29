@@ -32,8 +32,8 @@ public class GroupSelectSpeciality extends InteractionPage {
 		List< String > existingSpecial = helper.record.getSpecialityNames();
 		for ( String name : existingSpecial ) {
 			choices.addInternalChoice(
-					name + " (" + WordUtils.capitalize( helper.record.getSpecialitySkill( name ).toString() ) + ")",
-					name );
+					name + " (" + WordUtils.capitalizeFully( helper.record.getSpecialitySkill( name ).toString() ) +
+							")", name );
 		}
 		// add a 'cancel' choice as well
 		choices.addInternalChoice( "Cancel", "cancel" );

@@ -2,8 +2,6 @@ package com.oreilly.mmogroup.interaction.admin.groups;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang.WordUtils;
-
 import com.oreilly.mmogroup.api.GroupAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
@@ -38,7 +36,7 @@ public class GroupModifySpecialName extends InteractionPage {
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
 			GroupAPI.changeSpecialityName( helper.record, helper.selectedSpecialityName, data.toString().trim() );
-			return WordUtils.capitalize( helper.selectedSpecialityName ) + " is now known as " +
+			return helper.selectedSpecialityName + " is now known as " +
 					data.toString();
 		} catch ( PluginNotEnabled e ) {
 			throw new GeneralInteractionError( "Plugin not enabled" );

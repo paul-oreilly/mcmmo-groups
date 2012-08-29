@@ -2,8 +2,6 @@ package com.oreilly.mmogroup.interaction.admin;
 
 import java.util.HashMap;
 
-import org.apache.commons.lang.WordUtils;
-
 import com.oreilly.mmogroup.api.PlayerAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
@@ -25,14 +23,15 @@ public class ChangePlayersSpecialisation extends InteractionPage {
 	
 	@Override
 	public String getCustomTranslationKey( Interaction interaction ) {
+		// TODO: Add option for fail "insufficent power"
 		try {
 			PlayerHelper helper = PlayerHelper.fromSelectedPlayer( interaction );
 			if ( helper.playersGroup == null )
-				return getTranslationKey() + "_fail_nogroup";
+				return getTranslationKey() + ".fail.nogroup";
 		} catch ( ContextDataRequired error ) {
 			// TODO: Later, have an abort even thrown (and support for catching it!)
 		}
-		return getTranslationKey();
+		return getTranslationKey() + ".normal";
 	}
 	
 	
@@ -56,7 +55,7 @@ public class ChangePlayersSpecialisation extends InteractionPage {
 		Choices choices = new Choices( this, interaction );
 		PlayerHelper helper = PlayerHelper.fromSelectedPlayer( interaction );
 		for ( String name : helper.getEligableSpecialityOptions() )
-			choices.addInternalChoice( WordUtils.capitalize( name ), name )
+			choices.addInternalChoice( name, name )
 					.withAlias( name.toLowerCase() );
 		return choices;
 	}

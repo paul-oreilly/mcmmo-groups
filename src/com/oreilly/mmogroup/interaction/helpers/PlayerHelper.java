@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -100,7 +99,7 @@ public class PlayerHelper {
 		variables.put( "playerSpecial", ( specialisation == null ) ?
 				"none" : specialisation.toString() );
 		variables.put( "playerGroup", ( playersGroup == null ) ?
-				"none" : WordUtils.capitalize( playersGroup.getName() ) );
+				"none" : playersGroup.getName() );
 		variables.put( "playerPowerLevel", powerLevel );
 		return variables;
 	}

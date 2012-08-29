@@ -29,7 +29,7 @@ public class IO {
 		
 		
 		public String toSaveString() {
-			return WordUtils.capitalize( type.toString() ) + " " + Numbers.doubleAsPercentage( amount, 2 );
+			return WordUtils.capitalizeFully( type.toString() ) + " " + Numbers.doubleAsPercentage( amount, 2 );
 		}
 		
 	}

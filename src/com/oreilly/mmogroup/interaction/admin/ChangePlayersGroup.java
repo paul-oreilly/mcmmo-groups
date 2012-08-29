@@ -28,11 +28,11 @@ public class ChangePlayersGroup extends InteractionPage {
 		try {
 			helper = PlayerHelper.fromSelectedPlayer( interaction );
 			if ( helper.playersGroup == null )
-				return getTranslationKey() + "_nogroup";
+				return getTranslationKey() + ".noGroup";
 		} catch ( ContextDataRequired e ) {
 			e.printStackTrace();
 		}
-		return getTranslationKey();
+		return getTranslationKey() + ".hasGroup";
 	}
 	
 	

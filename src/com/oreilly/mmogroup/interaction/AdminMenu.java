@@ -28,7 +28,7 @@ public class AdminMenu extends InteractionPage {
 	public Choices generateChoices( Interaction interaction ) {
 		Choices choices = new Choices( this, interaction );
 		VariablePrefixer variable = new VariablePrefixer( this );
-		choices.addPageChoice( variable.define( "CreateNewGroup" ), new CreateGroup() );
+		choices.addPageChoice( variable.define( "CreateNewGroup" ), new CreateGroup(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "ModifyGroup" ), new SelectGroup(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "DeleteGroup" ), new SelectGroup(), new DeleteGroup() );
 		choices.addPageChoice( variable.define( "ChangeSettings" ), new SettingsMenu() );

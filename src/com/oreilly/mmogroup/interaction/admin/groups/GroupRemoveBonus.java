@@ -41,7 +41,7 @@ public class GroupRemoveBonus extends InteractionPage {
 		// list all the skills for which this group doesn't have an existing bonus
 		Set< SkillType > existingBonuses = helper.record.getSkillBonuses();
 		for ( SkillType skill : existingBonuses )
-			choices.addInternalChoice( WordUtils.capitalize( skill.toString() ), skill.toString() );
+			choices.addInternalChoice( WordUtils.capitalizeFully( skill.toString() ), skill.toString() );
 		// add a cancel choice
 		choices.addInternalChoice( "Cancel", "cancel" );
 		return choices;

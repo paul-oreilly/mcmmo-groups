@@ -1,10 +1,10 @@
 package com.oreilly.mmogroup.bukkitTools.interaction.text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -283,22 +283,42 @@ public class Interaction {
 	}
 	
 	
+	//DEBUG:
+	private void showPages() {
+		for ( InteractionPage page : pages )
+			System.out.println( "  -> " + page.getClass().getSimpleName() );
+	}
+	
+	
 	public Interaction addPages( Collection< InteractionPage > collection ) {
-		Iterator< InteractionPage > iter = collection.iterator();
-		while ( iter.hasNext() )
-			pages.add( 0, iter.next() );
+		// DEBUG:
+		pages.addAll( 0, collection );
+		showPages();
+		/*Iterator< InteractionPage > iter = collection.iterator();
+		while ( iter.hasNext() ) {
+			InteractionPage page = iter.next();
+			pages.add( 0, page );
+			System.out.println( "Added page: " + page.getClass().getSimpleName() );
+			showPages();
+		} */
+		
 		return this;
 	}
 	
 	
 	public Interaction addPages( InteractionPage... pageList ) {
-		int i = pageList.length - 1;
+		// DEBUG:
+		/*int i = pageList.length - 1;
 		while ( i >= 0 ) {
 			pages.add( 0, pageList[i] );
+			System.out.println( "Added page(a): " + pageList[i].getClass().getSimpleName() );
+			showPages();
 			// add any style overwrites
 			pageList[i].withStyles( style );
 			i--;
 		}
+		*/
+		addPages( Arrays.asList( pageList ) );
 		return this;
 	}
 	

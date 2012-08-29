@@ -1,7 +1,5 @@
 package com.oreilly.mmogroup.interaction;
 
-import org.apache.commons.lang.WordUtils;
-
 import com.oreilly.mmogroup.MMOGroup;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
@@ -21,9 +19,9 @@ public class SelectGroup extends InteractionPage {
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
 		Choices choices = new Choices( this, interaction );
 		for ( String groupName : MMOGroup.instance.groups.getAllGroupNames() ) {
-			choices.addInternalChoice( WordUtils.capitalize( groupName ), groupName )
-					.withAlias( WordUtils.capitalize( groupName ) )
-					.withAlias( groupName.toLowerCase() );
+			choices.addInternalChoice( groupName, groupName );
+			//.withAlias( WordUtils.capitalize( groupName ) )
+			//.withAlias( groupName.toLowerCase() );
 		}
 		return choices;
 	}
