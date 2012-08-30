@@ -1,0 +1,132 @@
+header:
+  name: "default"
+  inheritsFrom: 
+translations:
+  # Seen by players:
+  MainMenu:
+    title: "MainMenu"
+    text: "Select one of the following options"
+    joinGroup: "Join a group"
+    specialise: "Pick a speciality"
+    changeGroup: "Change group"
+    leaveGroup: "Leave group"
+  SelectGroup:
+    title: "Select a group"
+    text: ""
+  ChooseSpeciality:
+    title: "Pick a Speciality"
+    text: "At your power level ({%playerPowerLevel}), you can\nchoose from:"
+  JoinGroup:
+    title: "Join a group"
+    text: "Which group would you like to join?"
+  LeaveGroup:
+    title: "Leave a group"
+    text: "Are you sure you wish to leave {%playerGroup%}"
+
+  #Admin
+  AdminMenu:
+    text: "Pick an option, any option:"
+    title: "MMO Groups: Admin Menu"
+    ChangeSettings: "Alter comfig.yml settings"
+    ModifyPlayer: "Alter a player's information"
+    CreateNewGroup: "Create a new group"
+    ModifyGroup: "Alter an existing group"
+    DeleteGroup: "Delete a group"
+  AdminPlayerMenu:
+    text: "Please pick an action:"
+    title: "MMO Groups: Player Settings"
+    ChangePlayerGroup: "Change the group a player is part of"
+    ChangePlayerSpecial: "Change a player's specialisation"
+  SelectPlayer:
+    title: "MMO Groups: Player Selection"
+    text: "Please enter the name / number of the player\nyou want to select:"
+  SettingsMenu:
+    text: "Pick an option:"
+    title: "MMO Groups: Config Editor"
+    toggleAutoTeleport: "Toggle automatic teleporting\n  (currently {%autoTeleprotStatus%})"
+    changeSpecialBonus: "Change the default specialisation experience\n  (currently {%specialBonus%})"
+  ChangeDefaultSpecialisationBonus:
+    title: "Default Specialisation Bonus"
+    text: "Please enter the new experience percentage\nthat specialisations should have by default:"
+  ToggleAutomaticTeleporting:
+    title: "Toggle Automatic Teleporting"
+    text: "Automatic teleporting is currently {%currentState%}.\nWhat would you like to do?"
+  ChangePlayersGroup:
+    nogroup:
+      title: "Assign a Player's Group"
+      text: "Please select a group to add {%playerName%} to"
+    hasGroup:
+      title: "Change a Player's Group"
+      text: "Please choose which group to change the player to\n(They are currently a part of {%playerGroup%}"
+  ChangePlayersSpecialisation:
+    normal:
+      title: "Change Player's Specialisation"
+      text: "Please select the specialisation that\nyou want {%playerName%} to have.\n(They have a power level of {%playerPowerLevel%}, and currently\nspecialise in {%playerSpecial%})"
+    fail:
+      nogroup:
+        title: "Change Player's Specialisation"
+        text: "<color RED>ERROR:</color> This player cannot have a specialisation, as\nthey do not belong to a group"
+  CreateGroup:
+    title: "Create a New Group"
+    text: "Please enter the name of the new group\n(Currently groups are {%currentGroups%})"
+  DeleteGroup:
+    title: "Delete Group"
+    text: "Please select the group you wish to delete"
+  ModifyGroup:
+    title: "Group Settings"
+    text: "What would you like to change?"
+    ChangeName: "Change the name (currently {%groupName%}"
+    DeleteGroup: "Delete this group"
+    AddSpecial: "Add a specialisation option"
+    RemoveSpecial: "Remove a specialisation option"
+    ModifySpecial: "Alter an existing specialisation"
+    AddBonus: "Add a new experience bonus"
+    ModifyBonus: "Change an existing experience bonus"
+    RemoveBonus: "Delete an experience bonus"
+    AutoTeleportToggle: "Toggle auto-teleporting (on join) for this group"
+    SetTeleportLocation: "Set the auto-teleport location"
+
+# pages access via ModifyGroup...
+
+  GroupAddBonus:
+    title: "Add a Bonus to a Group"
+    text: "Please select the skill you wish to want to create\na bonus for:"
+  GroupAddSpeciality:
+    title: "Add a Speciality to a Group"
+    text: "Please select the skill you want this\nspeciality to apply to"
+  GroupChangeName:
+    title: "Change a Group's Name"
+    text: "Please enter the new name for the group\n(Currently {%groupName%})"
+  GroupModifyBonus:
+    title: "Modfy a Group Bonus"
+    text: "Please enter the new experience\npercentage that should apply for this group"
+  GroupModifySpecialAmount:
+    title: "Modify a Speciality's Percentage"
+    text: "Please enter the new experience\npercentage for this speciality (currently {%currentBonusFactor%})"
+  GroupModifySpeciality:
+    title: "Modify a Speciality"
+    text: "What would you like to change?"
+  GroupModifySpecialName:
+    title: "Change Speciality's Name"
+    text: "Please enter the new name for this speciality"
+  GroupModifySpecialSkill:
+    title: "Change a Speciality's Skill"
+    text: "Please select the new skill for this speciality"
+  GroupRemoveBonus:
+    title: "Remove Bonus"
+    text: "Are you sure you want to delete this bonus?"
+  GroupRemoveSpeciality:
+    title: "Remove Speciality"
+    text: "Are you sure want to delete this speciality?"
+  GroupSelectBonus:
+    title: "Select Speciality"
+    text: ""
+  GroupSelectBonus:
+    title: "Select Bonus"
+    text: ""
+  GroupSetTeleportLocation:
+    title: "Set Teleport Location"
+    text: ""
+  GroupToggleAutoTeleporting:
+    title: "Toggle Group Auto-Teleport"
+    text: "What would you like to do?"

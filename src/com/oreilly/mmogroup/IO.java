@@ -1,5 +1,6 @@
 package com.oreilly.mmogroup;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -125,6 +126,12 @@ public class IO {
 					}
 			}
 		}
+		try {
+			config.save( plugin.config.groupDataFile );
+		} catch ( IOException e ) {
+			plugin.log.severe( "IO Error while saving group data: " + e.getMessage() );
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -139,6 +146,12 @@ public class IO {
 				if ( player.specialisation != null )
 					config.set( fileKey + "." + PlayerRecordConstant.specialisation, player.specialisation );
 			}
+		}
+		try {
+			config.save( plugin.config.playerDataFile );
+		} catch ( IOException e ) {
+			plugin.log.severe( "IO Error while saving player data: " + e.getMessage() );
+			e.printStackTrace();
 		}
 	}
 	

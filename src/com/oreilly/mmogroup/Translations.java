@@ -1,7 +1,6 @@
 package com.oreilly.mmogroup;
 
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import com.oreilly.mmogroup.bukkitTools.text.Translater;
 
@@ -15,15 +14,6 @@ public class Translations {
 	public Translations( MMOGroup plugin ) {
 		this.plugin = plugin;
 		translater = new Translater( plugin.config.translationDirectory, plugin.log );
-		// DEBUG:
-		HashMap< String, String > defaultTranslations = getTranslations();
-		if ( defaultTranslations == null )
-			MMOGroup.instance.log.log( Level.SEVERE, "No default translation found" );
-		else {
-			System.out.println( "** DEFAULT TRANSLATION DATA **" );
-			for ( String key : defaultTranslations.keySet() )
-				System.out.println( key + ": " + defaultTranslations.get( key ) );
-		}
 	}
 	
 	

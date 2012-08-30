@@ -1,5 +1,7 @@
 package com.oreilly.mmogroup;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -7,6 +9,9 @@ import org.bukkit.event.Listener;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.SkillType;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
+import com.oreilly.mmogroup.api.GroupAPI;
+import com.oreilly.mmogroup.errors.PluginNotEnabled;
+import com.oreilly.mmogroup.events.PlayerJoinGroupEvent;
 
 
 public class Events implements Listener {
@@ -69,4 +74,21 @@ public class Events implements Listener {
 		}
 	}
 	
+	
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerJoinGroup( PlayerJoinGroupEvent event ) {
+		if ( event.allow ) {
+			// see if the new group has teleporting set...
+			Player player = Bukkit.getPlayer( event.playerName );
+			GroupRecord groupRecord;
+			try {
+				groupRecord = GroupAPI.getGroup( event.groupName );
+				if ( groupRecord.teleportOnJoin )
+					if ( groupRecord.teleportLocation != null )
+						// teleport the player
+						player.teleport( groupRecord.teleportLocation );
+			} catch ( PluginNotEnabled e ) {
+			}
+		}
+	}
 }

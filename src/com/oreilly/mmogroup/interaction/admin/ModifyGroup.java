@@ -9,7 +9,6 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.interaction.admin.groups.GroupAddBonus;
 import com.oreilly.mmogroup.interaction.admin.groups.GroupAddSpeciality;
-import com.oreilly.mmogroup.interaction.admin.groups.GroupChangeName;
 import com.oreilly.mmogroup.interaction.admin.groups.GroupModifyBonus;
 import com.oreilly.mmogroup.interaction.admin.groups.GroupModifySpeciality;
 import com.oreilly.mmogroup.interaction.admin.groups.GroupRemoveBonus;
@@ -40,26 +39,26 @@ public class ModifyGroup extends InteractionPage {
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
 		Choices choices = new Choices( this, interaction );
 		VariablePrefixer variable = new VariablePrefixer( this );
-		choices.addPageChoice( variable.define( "ChangeName" ),
-				new GroupChangeName() );
+		/*choices.addPageChoice( variable.define( "ChangeName" ),
+				new GroupChangeName() );*/
 		choices.addPageChoice( variable.define( "DeleteGroup" ),
-				new DeleteGroup() );
+				new DeleteGroup(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "AddSpecial" ),
-				new GroupAddSpeciality(), new GroupModifySpeciality() );
+				new GroupAddSpeciality(), new GroupModifySpeciality(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "RemoveSpecial" ),
-				new GroupSelectSpeciality(), new GroupRemoveSpeciality() );
+				new GroupSelectSpeciality(), new GroupRemoveSpeciality(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "ModifySpecial" ),
-				new GroupSelectSpeciality(), new GroupModifySpeciality() );
+				new GroupSelectSpeciality(), new GroupModifySpeciality(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "AddBonus" ),
-				new GroupAddBonus(), new GroupModifyBonus() );
+				new GroupAddBonus(), new GroupModifyBonus(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "ModifyBonus" ),
-				new GroupSelectBonus(), new GroupModifyBonus() );
+				new GroupSelectBonus(), new GroupModifyBonus(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "RemoveBonus" ),
-				new GroupRemoveBonus() );
+				new GroupRemoveBonus(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "AutoTeleportToggle" ),
-				new GroupToggleAutoTeleport() );
+				new GroupToggleAutoTeleport(), new ModifyGroup() );
 		choices.addPageChoice( variable.define( "SetTeleportLocation" ),
-				new GroupSetTeleportLocation() );
+				new GroupSetTeleportLocation(), new ModifyGroup() );
 		return choices;
 	}
 	

@@ -6,6 +6,7 @@ import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.MMOGroup;
 import com.oreilly.mmogroup.PlayerRecord;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
+import com.oreilly.mmogroup.events.PlayerJoinGroupEvent;
 
 
 public class PlayerAPI {
@@ -16,20 +17,16 @@ public class PlayerAPI {
 	static public void joinGroup( Player player, String groupName ) throws PluginNotEnabled {
 		if ( MMOGroup.instance == null )
 			throw new PluginNotEnabled();
-		if ( DEBUG )
-			MMOGroup.instance.log.finer( "API Call: joinGroup for " + player.getName() + " to " + groupName );
 		PlayerRecord record = MMOGroup.instance.players.getPlayer( player.getName() );
-		record.setGroup( groupName );
+		joinGroup( record, groupName );
 	}
 	
 	
 	static public void joinGroup( PlayerRecord player, GroupRecord group ) throws PluginNotEnabled {
 		if ( MMOGroup.instance == null )
 			throw new PluginNotEnabled();
-		if ( DEBUG )
-			MMOGroup.instance.log.finer( "API Call: joinGroup for " + player.getName() + " to " + group.getName() );
 		PlayerRecord record = MMOGroup.instance.players.getPlayer( player.getName() );
-		record.setGroup( group.getName() );
+		joinGroup( record, group.getName() );
 	}
 	
 	
@@ -38,7 +35,11 @@ public class PlayerAPI {
 			throw new PluginNotEnabled();
 		if ( DEBUG )
 			MMOGroup.instance.log.finer( "API Call: joinGroup for " + player.getName() + " to " + groupName );
-		player.setGroup( groupName );
+		PlayerJoinGroupEvent event = new PlayerJoinGroupEvent( player.getName(), groupName );
+		MMOGroup.instance.getServer().getPluginManager().callEvent( event );
+		if ( event.allow ) {
+			player.setGroup( groupName );
+		}
 	}
 	
 	

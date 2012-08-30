@@ -19,7 +19,7 @@ public class GroupAPI {
 	static public boolean DEBUG = true;
 	
 	
-	static public boolean changeName( String currentName, String newName ) throws PluginNotEnabled {
+	/*static public boolean changeName( String currentName, String newName ) throws PluginNotEnabled {
 		checkEnabled();
 		GroupRecord record = MMOGroup.instance.groups.getGroup( currentName );
 		if ( record != null )
@@ -27,6 +27,7 @@ public class GroupAPI {
 		else
 			return false;
 	}
+	
 	
 	
 	static public boolean changeName( GroupRecord record, String newName ) throws PluginNotEnabled {
@@ -38,8 +39,7 @@ public class GroupAPI {
 			return true;
 		} else
 			return false;
-	}
-	
+	}*/
 	
 	static public GroupRecord createGroup( String groupName ) throws PluginNotEnabled {
 		checkEnabled();
@@ -47,6 +47,7 @@ public class GroupAPI {
 			MMOGroup.instance.log.finer( "API Call: Create group " + groupName );
 		GroupRecord group = new GroupRecord( groupName, MMOGroup.instance );
 		MMOGroup.instance.groups.addGroup( group );
+		MMOGroup.instance.groups.save( group );
 		return group;
 	}
 	

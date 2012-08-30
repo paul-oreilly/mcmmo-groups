@@ -1,6 +1,8 @@
 package com.oreilly.mmogroup.interaction;
 
-import com.gmail.nossr50.datatypes.PlayerProfile;
+import org.bukkit.entity.Player;
+
+import com.gmail.nossr50.api.ExperienceAPI;
 import com.oreilly.mmogroup.MMOGroup;
 import com.oreilly.mmogroup.PermissionConstants;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
@@ -43,11 +45,8 @@ public class MainMenu extends InteractionPage {
 		// next check, can they specialise?
 		if ( MMOGroup.permission.has( interaction.user, PermissionConstants.specialise ) ) {
 			if ( helper.playerRecord.getSpecialisation() == null ) {
-				PlayerProfile profile = MMOGroup.mcMMO.getPlayerProfile( interaction.user.getName() );
-				if ( profile != null ) {
-					if ( profile.getPowerLevel() > MMOGroup.instance.config.minPowerLevelForSpecialisation ) {
-						choices.addPageChoice( variable.define( "specialise" ), new ChooseSpeciality() );
-					}
+				if ( ExperienceAPI.getPowerLevel( (Player)( interaction.user ) ) > MMOGroup.instance.config.minPowerLevelForSpecialisation ) {
+					choices.addPageChoice( variable.define( "specialise" ), new ChooseSpeciality() );
 				}
 			}
 		}

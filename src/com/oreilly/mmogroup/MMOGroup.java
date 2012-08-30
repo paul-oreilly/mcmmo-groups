@@ -2,6 +2,7 @@ package com.oreilly.mmogroup;
 
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,12 +19,7 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.Border;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.ClearChat;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.AdminMenu;
-import com.oreilly.mmogroup.interaction.AdminPlayerMenu;
 import com.oreilly.mmogroup.interaction.MainMenu;
-import com.oreilly.mmogroup.interaction.SettingsMenu;
-import com.oreilly.mmogroup.interaction.admin.CreateGroup;
-import com.oreilly.mmogroup.interaction.admin.DeleteGroup;
-import com.oreilly.mmogroup.interaction.admin.ModifyGroup;
 import com.oreilly.mmogroup.interaction.players.JoinGroup;
 import com.oreilly.mmogroup.interaction.players.LeaveGroup;
 
@@ -44,7 +40,8 @@ public class MMOGroup extends JavaPlugin {
 	public IO io = null;
 	public PluginLogger log = null;
 	public Translations translations = null;
-	public InteractionFactory interactionFactory = null;
+	public InteractionFactory playerInteractionFactory = null;
+	public InteractionFactory adminInteractionFactory = null;
 	
 	
 	public MMOGroup() {
@@ -58,6 +55,13 @@ public class MMOGroup extends JavaPlugin {
 		
 		// get our logger working
 		log = new PluginLogger( this );
+		
+		// copy over any resources for use
+		try {
+			saveResource( "translations/default.yml", false );
+		} catch ( IllegalArgumentException error ) {
+			log.warning( "Failed to location default translation file within the plugin .jar file" );
+		}
 		
 		// get reference to mcMMO
 		// TODO: Null check etc
@@ -84,13 +88,24 @@ public class MMOGroup extends JavaPlugin {
 		
 		// create a new interface factory
 		// no pages - those can be added depending on which command is used.
-		interactionFactory = new InteractionFactory()
+		playerInteractionFactory = new InteractionFactory()
 				.withExitSequence( "exit", "quit" )
 				.withReturnSequence( "return" )
 				.withFormatter( new Border() )
 				.withFormatter( new ClearChat() )
 				.withTimeout( 20 )
 				.withTranslation( translations.translater, "default" ); // TODO: Use value from config
+		
+		adminInteractionFactory = new InteractionFactory()
+				.withExitSequence( "exit", "quit" )
+				.withReturnSequence( "return" )
+				.withFormatter( new Border() )
+				.withFormatter( new ClearChat() )
+				.withTimeout( 20 )
+				.withTranslation( translations.translater, "default" )
+				.withStyle( Border.COLOR_TITLE_TEXT, ChatColor.GOLD )
+				.withStyle( Border.COLOR_TITLE_BORDER, ChatColor.DARK_RED )
+				.withStyle( Border.COLOR_TEXT_BORDER, ChatColor.BLUE );
 		
 		// TODO: Commands
 		
@@ -112,11 +127,12 @@ public class MMOGroup extends JavaPlugin {
 		if ( cmd.getName().equalsIgnoreCase( "mmogroup" ) ) {
 			switch ( args.length ) {
 				case 0:
-					interactionFactory.buildInteraction( sender )
+					playerInteractionFactory.buildInteraction( sender )
 							.withPages( new MainMenu() )
 							.begin();
 					return true;
 				case 1: //TODO: Add help
+					// TODO: Permission checks!
 					/*if ( args[0].equalsIgnoreCase( "?" ) | args[1].equalsIgnoreCase( "help" ) ) {
 						interactionFactory.buildInteraction( sender )
 								.withPages( new Help() )
@@ -124,74 +140,56 @@ public class MMOGroup extends JavaPlugin {
 						return true;
 					}*/
 					if ( args[0].toLowerCase().trim().startsWith( "admin" ) ) {
-						interactionFactory.buildInteraction( sender )
-								.withPages( new AdminMenu() )
-								.begin();
-						return true;
+						if ( permission.has( sender, PermissionConstants.admin ) ) {
+							adminInteractionFactory.buildInteraction( sender )
+									.withPages( new AdminMenu() )
+									.begin();
+							return true;
+						}
+						else
+							return false;
 					}
 					if ( args[0].equalsIgnoreCase( "join" ) ) {
-						interactionFactory.buildInteraction( sender )
-								.withPages( new JoinGroup() )
-								.begin();
-						return true;
+						if ( permission.has( sender, PermissionConstants.joinGroup ) ) {
+							playerInteractionFactory.buildInteraction( sender )
+									.withPages( new JoinGroup() )
+									.begin();
+							return true;
+						} else
+							return false;
 					}
 					if ( args[0].toLowerCase().trim().startsWith( "change" ) ) {
-						interactionFactory.buildInteraction( sender )
-								.withPages( new LeaveGroup(), new JoinGroup() )
-								.begin();
-						return true;
+						if ( permission.has( sender, PermissionConstants.leaveGroup ) &
+								permission.has( sender, PermissionConstants.joinGroup ) ) {
+							playerInteractionFactory.buildInteraction( sender )
+									.withPages( new LeaveGroup(), new JoinGroup() )
+									.begin();
+							return true;
+						} else
+							return false;
 					}
 					break;
 				case 2:
 					if ( args[0].equalsIgnoreCase( "join" ) ) {
 						if ( sender instanceof Player )
-							try {
-								PlayerAPI.joinGroup( (Player)sender, args[1] );
-								return true;
-							} catch ( PluginNotEnabled e ) {
-								e.printStackTrace();
-							}
+							if ( permission.has( sender, PermissionConstants.joinGroup ) )
+								try {
+									PlayerAPI.joinGroup( (Player)sender, args[1] );
+									return true;
+								} catch ( PluginNotEnabled e ) {
+									e.printStackTrace();
+								}
 					}
 					if ( args[0].toLowerCase().trim().startsWith( "change" ) ) {
 						if ( sender instanceof Player )
-							try {
-								PlayerAPI.changeGroup( (Player)sender, args[1] );
-								return true;
-							} catch ( PluginNotEnabled e ) {
-								e.printStackTrace();
-							}
-					}
-					if ( args[0].toLowerCase().trim().startsWith( "admin" ) ) {
-						if ( args[1].equalsIgnoreCase( "create" ) ) {
-							interactionFactory.buildInteraction( sender )
-									.withPages( new CreateGroup() )
-									.begin();
-							return true;
-						}
-						if ( args[1].equalsIgnoreCase( "modify" ) ) {
-							interactionFactory.buildInteraction( sender )
-									.withPages( new ModifyGroup() )
-									.begin();
-							return true;
-						}
-						if ( args[1].equalsIgnoreCase( "delete" ) ) {
-							interactionFactory.buildInteraction( sender )
-									.withPages( new DeleteGroup() )
-									.begin();
-							return true;
-						}
-						if ( args[1].equalsIgnoreCase( "settings" ) ) {
-							interactionFactory.buildInteraction( sender )
-									.withPages( new SettingsMenu() )
-									.begin();
-							return true;
-						}
-						if ( args[1].equalsIgnoreCase( "player" ) ) {
-							interactionFactory.buildInteraction( sender )
-									.withPages( new AdminPlayerMenu() )
-									.begin();
-							return true;
-						}
+							if ( permission.has( sender, PermissionConstants.leaveGroup ) &
+									permission.has( sender, PermissionConstants.joinGroup ) )
+								try {
+									PlayerAPI.changeGroup( (Player)sender, args[1] );
+									return true;
+								} catch ( PluginNotEnabled e ) {
+									e.printStackTrace();
+								}
 					}
 					break;
 			}

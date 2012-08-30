@@ -33,12 +33,8 @@ public class Translater {
 					record.inheritsFrom.addAll( inheritsFrom );
 				for ( String key : content.getKeys( true ) ) {
 					Object item = content.get( key );
-					// DEBUG
-					System.out.println( "Translation item (" + item.getClass().getSimpleName() + "): " +
-							item.toString() );
 					if ( ( item instanceof String ) | ( item instanceof Double ) | ( item instanceof Integer ) ) {
 						record.rawTranslations.put( key, item.toString() );
-						System.out.println( "Added item." );
 					}
 				}
 			}

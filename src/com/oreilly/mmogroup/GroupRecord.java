@@ -36,11 +36,10 @@ public class GroupRecord {
 	}
 	
 	
-	public void changeName( String newName ) {
+	/*public void changeName( String newName ) {
 		name = newName;
 		plugin.groups._internal_GroupRecordUpdate( this );
-	}
-	
+	}*/
 	
 	public void addSpecialityOption( String name, SkillType type, int requiredPowerLevel, double skillFactor ) {
 		if ( specialitiesByName.containsKey( name ) )

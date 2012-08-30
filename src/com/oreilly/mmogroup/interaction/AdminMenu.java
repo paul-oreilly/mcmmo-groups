@@ -28,11 +28,13 @@ public class AdminMenu extends InteractionPage {
 	public Choices generateChoices( Interaction interaction ) {
 		Choices choices = new Choices( this, interaction );
 		VariablePrefixer variable = new VariablePrefixer( this );
-		choices.addPageChoice( variable.define( "CreateNewGroup" ), new CreateGroup(), new ModifyGroup() );
-		choices.addPageChoice( variable.define( "ModifyGroup" ), new SelectGroup(), new ModifyGroup() );
-		choices.addPageChoice( variable.define( "DeleteGroup" ), new SelectGroup(), new DeleteGroup() );
-		choices.addPageChoice( variable.define( "ChangeSettings" ), new SettingsMenu() );
-		choices.addPageChoice( variable.define( "ModifyPlayer" ), new SelectPlayer(), new AdminPlayerMenu() );
+		choices.addPageChoice( variable.define( "CreateNewGroup" ), new CreateGroup(), new ModifyGroup(),
+				new AdminMenu() );
+		choices.addPageChoice( variable.define( "ModifyGroup" ), new SelectGroup(), new ModifyGroup(), new AdminMenu() );
+		choices.addPageChoice( variable.define( "DeleteGroup" ), new SelectGroup(), new DeleteGroup(), new AdminMenu() );
+		choices.addPageChoice( variable.define( "ChangeSettings" ), new SettingsMenu(), new AdminMenu() );
+		choices.addPageChoice( variable.define( "ModifyPlayer" ), new SelectPlayer(), new AdminPlayerMenu(),
+				new AdminMenu() );
 		return choices;
 	}
 }

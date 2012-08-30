@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.PlayerProfile;
 import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.MMOGroup;
@@ -75,7 +77,7 @@ public class PlayerHelper {
 		if ( MMOGroup.mcMMO != null ) {
 			PlayerProfile profile = MMOGroup.mcMMO.getPlayerProfile( playerRecord.getName() );
 			if ( profile != null )
-				powerLevel = profile.getPowerLevel();
+				powerLevel = ExperienceAPI.getPowerLevel( Bukkit.getPlayer( playerRecord.getName() ) );
 		}
 	}
 	
