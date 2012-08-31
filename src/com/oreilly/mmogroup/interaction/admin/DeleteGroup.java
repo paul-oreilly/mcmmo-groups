@@ -1,6 +1,5 @@
 package com.oreilly.mmogroup.interaction.admin;
 
-import com.oreilly.mmogroup.GroupRecord;
 import com.oreilly.mmogroup.api.GroupAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
@@ -36,7 +35,7 @@ public class DeleteGroup extends InteractionPage {
 			GeneralInteractionError {
 		if ( decision.contentEquals( "yes" ) ) {
 			try {
-				GroupAPI.deleteGroup( interaction.getContextData( GroupRecord.class, interaction,
+				GroupAPI.deleteGroup( interaction.getContextData( String.class, interaction,
 						Constants.SELECTED_GROUP ) );
 			} catch ( PluginNotEnabled e ) {
 				e.printStackTrace();

@@ -57,9 +57,6 @@ public class Interaction {
 	public Translater translator = null;
 	public String translation = null;
 	
-	// if the interaction just about over?
-	public boolean queueEndOfInteraction = false;
-	
 	// default text colors for each message type
 	public HashMap< MessageType, ArrayList< ChatColor >> messageStyles =
 			new HashMap< MessageType, ArrayList< ChatColor >>();
@@ -72,6 +69,9 @@ public class Interaction {
 	
 	// the current page 
 	public InteractionPage currentPage = null;
+	
+	// is the interaction about to end? (Delayed for any last messages)
+	public boolean queueEndOfInteraction = false;
 	
 	
 	static public boolean registerEventListener( Plugin plugin ) {
@@ -122,11 +122,13 @@ public class Interaction {
 	
 	
 	public void endOfInteraction() {
-		// DEBUG:
-		System.out.println( "ENDING INTERACTION" );
-		// TODO: This method is getting called before the last message to the player is sent..
-		//   Therefore, the user the last message goes to is 'null' - and an error happens.
+		// 'flush' the display
+		if ( user instanceof Player )
+			for ( int i = 0; i < 20; i++ )
+				user.sendMessage( " " );
+		// send any messages from other players
 		sendQueuedMessages();
+		// reset data values for easier garbage collection.
 		currentInteractions.remove( user );
 		formatter = null;
 		validator = null;
@@ -283,41 +285,13 @@ public class Interaction {
 	}
 	
 	
-	//DEBUG:
-	private void showPages() {
-		for ( InteractionPage page : pages )
-			System.out.println( "  -> " + page.getClass().getSimpleName() );
-	}
-	
-	
 	public Interaction addPages( Collection< InteractionPage > collection ) {
-		// DEBUG:
 		pages.addAll( 0, collection );
-		showPages();
-		/*Iterator< InteractionPage > iter = collection.iterator();
-		while ( iter.hasNext() ) {
-			InteractionPage page = iter.next();
-			pages.add( 0, page );
-			System.out.println( "Added page: " + page.getClass().getSimpleName() );
-			showPages();
-		} */
-		
 		return this;
 	}
 	
 	
 	public Interaction addPages( InteractionPage... pageList ) {
-		// DEBUG:
-		/*int i = pageList.length - 1;
-		while ( i >= 0 ) {
-			pages.add( 0, pageList[i] );
-			System.out.println( "Added page(a): " + pageList[i].getClass().getSimpleName() );
-			showPages();
-			// add any style overwrites
-			pageList[i].withStyles( style );
-			i--;
-		}
-		*/
 		addPages( Arrays.asList( pageList ) );
 		return this;
 	}
