@@ -13,5 +13,6 @@ Requires mcmmo and Vault.
 Build Targets
 -------------
 
-mcMMO v 1.3.09
-Vault 1.2.16
+Craftbukkit 1.3.1R2
+mcMMO v 1.3.11
+Vault 1.2.18
