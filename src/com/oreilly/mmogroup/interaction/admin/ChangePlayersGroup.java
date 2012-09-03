@@ -56,6 +56,8 @@ public class ChangePlayersGroup extends InteractionPage {
 		try {
 			for ( String groupName : GroupAPI.getAllGroupNames() )
 				choices.addInternalChoice( groupName, groupName );
+			// also add an option for "No group at all"
+			choices.addInternalChoice( "None", "none" );
 		} catch ( PluginNotEnabled e ) {
 			e.printStackTrace();
 			throw new GeneralInteractionError( "Plugin not enabled" );
@@ -69,6 +71,12 @@ public class ChangePlayersGroup extends InteractionPage {
 			ContextDataRequired {
 		try {
 			PlayerHelper helper = PlayerHelper.fromSelectedPlayer( interaction );
+			if ( groupName.contentEquals( "none" ) ) {
+				if ( helper.playersGroup != null ) {
+					PlayerAPI.leaveGroup( helper.playerRecord );
+					return helper.playerRecord.getName() + " no longer belongs to any group.";
+				}
+			}
 			if ( helper.playersGroup == null )
 				PlayerAPI.joinGroup( helper.playerRecord, groupName );
 			else

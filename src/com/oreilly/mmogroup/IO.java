@@ -88,8 +88,8 @@ public class IO {
 				ConfigurationSection section = config.getConfigurationSection( fileKey );
 				String playerName = section.getString( PlayerRecordConstant.name );
 				PlayerRecord player = new PlayerRecord( plugin, playerName );
-				player.groupName = config.getString( PlayerRecordConstant.groupName );
-				player.specialisation = config.getString( PlayerRecordConstant.specialisation );
+				player.groupName = section.getString( PlayerRecordConstant.groupName );
+				player.specialisation = section.getString( PlayerRecordConstant.specialisation );
 				// add the player to the system
 				plugin.players.addPlayer( player );
 			}
@@ -108,6 +108,11 @@ public class IO {
 	
 	
 	public void saveAllGroups() {
+		// clear the file before saving data
+		if ( plugin.config.groupDataFile.exists() )
+			;
+		plugin.config.groupDataFile.delete();
+		// write the new file
 		FileConfiguration config = Yaml.loadYamlFile( plugin.config.groupDataFile, plugin.log );
 		if ( config != null ) {
 			for ( GroupRecord record : plugin.groups.groups.values() ) {
@@ -136,6 +141,10 @@ public class IO {
 	
 	
 	public void saveAllPlayers() {
+		// clear the file first...
+		if ( plugin.config.playerDataFile.exists() )
+			plugin.config.playerDataFile.delete();
+		// write the new data
 		FileConfiguration config = Yaml.loadYamlFile( plugin.config.playerDataFile, plugin.log );
 		if ( config != null ) {
 			for ( PlayerRecord player : plugin.players.players.values() ) {
