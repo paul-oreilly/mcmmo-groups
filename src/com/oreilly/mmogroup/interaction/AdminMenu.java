@@ -19,15 +19,9 @@ public class AdminMenu extends InteractionPage {
 	
 	
 	@Override
-	public String getTranslationKey() {
-		return "AdminMenu";
-	}
-	
-	
-	@Override
 	public Choices generateChoices( Interaction interaction ) {
 		Choices choices = new Choices( this, interaction );
-		VariablePrefixer variable = new VariablePrefixer( this );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		choices.addPageChoice( variable.define( "CreateNewGroup" ), new CreateGroup(), new ModifyGroup(),
 				new AdminMenu() );
 		choices.addPageChoice( variable.define( "ModifyGroup" ), new SelectGroup(), new ModifyGroup(), new AdminMenu() );

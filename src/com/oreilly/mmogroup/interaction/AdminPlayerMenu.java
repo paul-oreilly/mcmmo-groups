@@ -19,7 +19,7 @@ public class AdminPlayerMenu extends InteractionPage {
 	@Override
 	public Choices generateChoices( Interaction interaction ) {
 		Choices choices = new Choices( this, interaction );
-		VariablePrefixer variable = new VariablePrefixer( this );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		choices.addPageChoice( variable.define( "ChangePlayerGroup" ), new ChangePlayersGroup() );
 		choices.addPageChoice( variable.define( "ChangePlayerSpecial" ), new ChangePlayersSpecialisation() );
 		return choices;

@@ -27,7 +27,7 @@ public class MainMenu extends InteractionPage {
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
 		Choices choices = new Choices( this, interaction );
-		VariablePrefixer variable = new VariablePrefixer( this );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		// depending on user, the choices change...
 		PlayerHelper helper = new PlayerHelper( interaction );
 		if ( helper.playersGroup == null ) {

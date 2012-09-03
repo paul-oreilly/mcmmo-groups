@@ -27,11 +27,11 @@ public class ChangePlayersSpecialisation extends InteractionPage {
 		try {
 			PlayerHelper helper = PlayerHelper.fromSelectedPlayer( interaction );
 			if ( helper.playersGroup == null )
-				return getTranslationKey() + ".fail.nogroup";
+				return this.getClass().getSimpleName() + ".fail.nogroup";
 		} catch ( ContextDataRequired error ) {
 			// TODO: Later, have an abort even thrown (and support for catching it!)
 		}
-		return getTranslationKey() + ".normal";
+		return this.getClass().getSimpleName() + ".normal";
 	}
 	
 	

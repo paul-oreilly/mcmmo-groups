@@ -1,5 +1,6 @@
 package com.oreilly.mmogroup.bukkitTools.text;
 
+import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 
 
@@ -18,8 +19,8 @@ public class VariablePrefixer {
 	}
 	
 	
-	public VariablePrefixer( InteractionPage page ) {
-		prefix = page.getTranslationKey() + ".";
+	public VariablePrefixer( InteractionPage page, Interaction interaction ) {
+		prefix = page.getTranslationKey( interaction ) + ".";
 	}
 	
 	

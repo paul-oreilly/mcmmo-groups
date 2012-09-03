@@ -24,7 +24,7 @@ public class SettingsMenu extends InteractionPage {
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
 		Choices choices = new Choices( this, interaction );
-		VariablePrefixer variable = new VariablePrefixer( this );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		choices.addPageChoice( variable.define( "toggleAutoTeleport" ), new ToggleAutomaticTeleporting() );
 		choices.addPageChoice( variable.define( "changeSpecialBonus" ), new ChangeDefaultSpecialisationBonus() );
 		// TODO: Add other config options

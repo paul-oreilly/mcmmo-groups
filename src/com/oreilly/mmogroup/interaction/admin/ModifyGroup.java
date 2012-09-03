@@ -38,7 +38,7 @@ public class ModifyGroup extends InteractionPage {
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
 		Choices choices = new Choices( this, interaction );
-		VariablePrefixer variable = new VariablePrefixer( this );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		/*choices.addPageChoice( variable.define( "ChangeName" ),
 				new GroupChangeName() );*/
 		choices.addPageChoice( variable.define( "DeleteGroup" ),
