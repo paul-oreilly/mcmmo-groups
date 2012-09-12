@@ -122,10 +122,10 @@ public class Interaction {
 	
 	
 	public void endOfInteraction() {
-		// 'flush' the display
+		// let user know the interaction is finished...
 		if ( user instanceof Player )
-			for ( int i = 0; i < 20; i++ )
-				user.sendMessage( " " );
+			for ( int i =0; i < 20; i++ )
+				user.sendMessage(" ");
 		// send any messages from other players
 		sendQueuedMessages();
 		// reset data values for easier garbage collection.
@@ -286,7 +286,7 @@ public class Interaction {
 	
 	
 	public Interaction addPages( Collection< InteractionPage > collection ) {
-		pages.addAll( 0, collection );
+		pages.addAll(0, collection);
 		return this;
 	}
 	
@@ -445,13 +445,13 @@ public class Interaction {
 	
 	public String parseMessage( String message ) {
 		if ( DEBUG )
-			System.out.println( "Raw message: " + message );
+			System.out.println("Raw message: " + message );
 		// get a list of variables
 		HashMap< String, Object > combinedVariables = new HashMap< String, Object >();
 		// add any translation information
 		if ( translator != null )
 			if ( translation != null )
-				combinedVariables.putAll( translator.getTranslation( translation ) );
+				combinedVariables.putAll( translator.getTranslation( translation ));
 		// add interaction level variables
 		combinedVariables.putAll( variables ); //TODO: Have interaction add things like "playername" etc auto
 		// add variables from the current page
@@ -462,9 +462,9 @@ public class Interaction {
 		}
 		// apply variables to the text
 		if ( DEBUG ) {
-			System.out.println( "Variables:" );
-			for ( String key : combinedVariables.keySet() )
-				System.out.println( "  " + key + ": " + combinedVariables.get( key ) );
+			System.out.println("Variables:");
+			for ( String key : combinedVariables.keySet())
+				System.out.println("  " + key + ": " + combinedVariables.get(key));
 		}
 		message = VariableTool.applyVariables( combinedVariables, message );
 		// Replace style tags...

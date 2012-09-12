@@ -16,6 +16,7 @@ import com.oreilly.mmogroup.bukkitTools.text.VariableTool;
 
 // TODO: "Loopback" method, which pops this page back into the front of the queue
 // TODO: "Bookmark" method, which adds this page to the bookmark stack (for when player uses "back" command)
+// TODO: Decision on pagination doesn't send proposed text to formatter - so misses lines added by border.
 
 abstract public class InteractionPage {
 	
@@ -123,7 +124,7 @@ abstract public class InteractionPage {
 				String text = generateDisplayBody( interaction ) + "\n";
 				String choiceText = interaction.parseMessage(
 						StringUtils.join( choices.generateChoiceList(), "" ) );
-				if ( text.split( "\n" ).length + choiceText.split( "\n" ).length + 1 > maxLines ) {
+				if ( text.split( "\n" ).length + choiceText.split( "\n" ).length + 1> maxLines ) {
 					// we'll need a paginator
 					paginator = new PaginationAssistant( choiceText, maxLines, text );
 					interaction.context.put( getTranslationKey( interaction ) + "_paginator", paginator );

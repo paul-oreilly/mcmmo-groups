@@ -11,6 +11,8 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequir
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
 
 
+
+
 public class Choices {
 	
 	TreeMap< Integer, Choice > orderedChoices = new TreeMap< Integer, Choice >();
@@ -123,5 +125,4 @@ public class Choices {
 		// otherwise...
 		throw new GeneralInteractionError( "Unsupported choice type" );
 	}
-	
 }
