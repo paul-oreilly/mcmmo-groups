@@ -8,4 +8,5 @@
 .classpath
 .project
 .settings/
+.pydevproject
 
