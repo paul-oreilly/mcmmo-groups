@@ -6,127 +6,165 @@ translations:
   MainMenu:
     title: "MainMenu"
     text: "Select one of the following options"
-    joinGroup: "Join a group"
+    join_group: "Join a group"
     specialise: "Pick a speciality"
-    changeGroup: "Change group"
-    leaveGroup: "Leave group"
+    change_group: "Change group"
+    leave_group: "Leave group"
+    cancel: "Exit"
   SelectGroup:
     title: "Select a group"
     text: ""
+    cancel: "None"
   ChooseSpeciality:
     title: "Pick a Speciality"
-    text: "At your power level ({%playerPowerLevel}), you can\nchoose from:"
+    text: "At your power level ({%player_power_level}), you can choose from:"
+    cancel: "Cancel"
   JoinGroup:
     title: "Join a group"
     text: "Which group would you like to join?"
+    cancel: "Actually, none."
   LeaveGroup:
     title: "Leave a group"
-    text: "Are you sure you wish to leave {%playerGroup%}"
+    text: "Are you sure you wish to leave {%player_group}?"
+    confirm: "Yes, I'm sure."
+    cancel: "No."
 
   #Admin
   AdminMenu:
     text: "Pick an option, any option:"
     title: "MMO Groups: Admin Menu"
-    ChangeSettings: "Alter comfig.yml settings"
-    ModifyPlayer: "Alter a player's information"
-    CreateNewGroup: "Create a new group"
-    ModifyGroup: "Alter an existing group"
-    DeleteGroup: "Delete a group"
+    change_settings: "Change settings for the plugin"
+    modify_player: "Change settings for a player"
+    create_new_group: "Create a new group"
+    modify_group: "Alter an existing group"
+    delete_group: "Delete a group"
+    cancel: "Exit"
   AdminPlayerMenu:
     text: "Please pick an action:"
     title: "MMO Groups: Player Settings"
-    ChangePlayerGroup: "Change the group a player is part of"
-    ChangePlayerSpecial: "Change a player's specialisation"
+    change_player_group: "Change the group a player is part of"
+    change_player_special: "Change a player's specialisation"
+    cancel: "Cancel"
   SelectPlayer:
     title: "MMO Groups: Player Selection"
     text: "Please enter the name / number of the player\nyou want to select:"
+    cancel: "Cancel"
   SettingsMenu:
     text: "Pick an option:"
     title: "MMO Groups: Config Editor"
-    toggleAutoTeleport: "Toggle automatic teleporting\n  (currently {%autoTeleprotStatus%})"
-    changeSpecialBonus: "Change the default specialisation experience\n  (currently {%specialBonus%})"
+    toggle_auto_teleport: "Toggle automatic teleporting\n  (currently {%auto_teleprot_status})"
+    change_special_bonus: "Change the default specialisation experience\n  (currently {%special_bonus})"
+    cancel: "Cancel"
   ChangeDefaultSpecialisationBonus:
     title: "Default Specialisation Bonus"
     text: "Please enter the new experience percentage\nthat specialisations should have by default:"
   ToggleAutomaticTeleporting:
     title: "Toggle Automatic Teleporting"
-    text: "Automatic teleporting is currently {%currentState%}.\nWhat would you like to do?"
+    text: "Automatic teleporting is currently {%current_state}.\nWhat would you like to do?"
   ChangePlayersGroup:
     nogroup:
       title: "Assign a Player's Group"
-      text: "Please select a group to add {%playerName%} to"
+      text: "Please select a group to add {%player_name} to"
+      cancel: "Cancel"
     hasGroup:
       title: "Change a Player's Group"
-      text: "Please choose which group to change the player to\n(They are currently a part of {%playerGroup%}"
+      text: "Please choose which group to change the player to\n(They are currently a part of {%player_group}"
+      cancel: "Cancel"
   ChangePlayersSpecialisation:
     normal:
       title: "Change Player's Specialisation"
-      text: "Please select the specialisation that\nyou want {%playerName%} to have.\n(They have a power level of {%playerPowerLevel%}, and currently\nspecialise in {%playerSpecial%})"
+      text: "Please select the specialisation that\nyou want {%player_name} to have.\n(They have a power level of {%player_power_level}, and currently\nspecialise in {%player_special})"
+      cancel: "Cancel"
     fail:
       nogroup:
         title: "Change Player's Specialisation"
         text: "<color RED>ERROR:</color> This player cannot have a specialisation, as\nthey do not belong to a group"
+        cancel: "Cancel"
   CreateGroup:
     title: "Create a New Group"
-    text: "Please enter the name of the new group\n(Currently groups are {%currentGroups%})"
+    text: "Please enter the name of the new group\n(Currently groups are {%current_groups})"
   DeleteGroup:
     title: "Delete Group"
     text: "Please select the group you wish to delete"
+    cancel: "Cancel"
   ModifyGroup:
     title: "Group Settings"
     text: "What would you like to change?"
-    ChangeName: "Change the name (currently {%groupName%}"
-    DeleteGroup: "Delete this group"
-    AddSpecial: "Add a specialisation option"
-    RemoveSpecial: "Remove a specialisation option"
-    ModifySpecial: "Alter an existing specialisation"
-    AddBonus: "Add a new experience bonus"
-    ModifyBonus: "Change an existing experience bonus"
-    RemoveBonus: "Delete an experience bonus"
-    AutoTeleportToggle: "Toggle auto-teleporting (on join) for this group"
-    SetTeleportLocation: "Set the auto-teleport location"
+    change_name: "Change the name (currently {%group_name}"
+    delete_group: "Delete this group"
+    add_special: "Add a specialisation option"
+    remove_special: "Remove a specialisation option"
+    modify_special: "Alter an existing specialisation"
+    add_bonus: "Add a new experience bonus"
+    modify_bonus: "Change an existing experience bonus"
+    remove_bonus: "Delete an experience bonus"
+    auto_teleport_toggle: "Toggle auto-teleporting (on join) for this group"
+    set_teleport_location: "Set the auto-teleport location"
+    cancel: "Return to the previous menu"
 
 # pages access via ModifyGroup...
 
   GroupAddBonus:
     title: "Add a Bonus to a Group"
     text: "Please select the skill you wish to want to create\na bonus for:"
+    cancel: "Cancel"
   GroupAddSpeciality:
     title: "Add a Speciality to a Group"
     text: "Please select the skill you want this\nspeciality to apply to"
+    cancel: "Cancel"
   GroupChangeName:
     title: "Change a Group's Name"
-    text: "Please enter the new name for the group\n(Currently {%groupName%})"
+    text: "Please enter the new name for the group\n(Currently {%group_name})"
   GroupModifyBonus:
     title: "Modfy a Group Bonus"
     text: "Please enter the new experience\npercentage that should apply for this group"
   GroupModifySpecialAmount:
     title: "Modify a Speciality's Percentage"
-    text: "Please enter the new experience\npercentage for this speciality (currently {%currentBonusFactor%})"
+    text: "Please enter the new experience\npercentage for this speciality (currently {%current_bonus_factor})"
   GroupModifySpeciality:
     title: "Modify a Speciality"
     text: "What would you like to change?"
+    change_name: "Change the name"
+    change_skill: "Change the skill this applies to"
+    change_amount: "Change the amount of experience gained"
+    change_requirement: "Change the power level required"
+    cancel: "Go back"
   GroupModifySpecialName:
     title: "Change Speciality's Name"
     text: "Please enter the new name for this speciality"
   GroupModifySpecialSkill:
     title: "Change a Speciality's Skill"
     text: "Please select the new skill for this speciality"
+    cancel: "Cancel"
+  GroupModifySpecialityRequirement:
+    title: "Change the Required Power Level"
+    text: "To specialise as {%group_selected_speciality}, what is the\nminimum power level a player should have?"
   GroupRemoveBonus:
     title: "Remove Bonus"
-    text: "Are you sure you want to delete this bonus?"
+    text: "Pick the bonus you wish to remove:"
+    cancel: "Cancel"
   GroupRemoveSpeciality:
     title: "Remove Speciality"
-    text: "Are you sure want to delete this speciality?"
+    text: "Pick the speciality you wish to remove:"
+    cancel: "Cancel"
   GroupSelectBonus:
     title: "Select Speciality"
-    text: ""
-  GroupSelectBonus:
-    title: "Select Bonus"
-    text: ""
+    text: "Please select a speciality:"
+    cancel: "Cancel"
+  GroupSelectSpeciality:
+    title: "Select a Speciality"
+    text: "Which speciality would you like to change?"
+    cancel: "Cancel"
   GroupSetTeleportLocation:
     title: "Set Teleport Location"
-    text: ""
-  GroupToggleAutoTeleporting:
+    text: "How would you like to change the teleport location?"
+    current_location: "Set it to my current location"
+    cancel: "Do nothing"
+  GroupToggleAutoTeleport:
     title: "Toggle Group Auto-Teleport"
     text: "What would you like to do?"
+    enable: "Enable"
+    disable: "Disable"
+    keep_enabled: "Keep enabled"
+    keep_disabled: "Keep disabled"
+    

@@ -8,7 +8,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 
 
 public class ToggleAutomaticTeleporting extends InteractionPage {
@@ -29,13 +31,14 @@ public class ToggleAutomaticTeleporting extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		if ( MMOGroup.instance.config.teleportOnJoin )
-			choices.addInternalChoice( "disable", "disable" );
+			choices.addInternalChoice( variable.define( "disable" ), "disable" );
 		else
-			choices.addInternalChoice( "enable", "endable" );
-		choices.addInternalChoice( "Cancel", "cancel" );
+			choices.addInternalChoice( variable.define( "enable" ), "endable" );
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	

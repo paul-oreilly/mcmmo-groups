@@ -18,7 +18,7 @@ public class Events implements Listener {
 	
 	static boolean experienceAddInProgress = false;
 	
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	
 	public MMOGroup plugin = null;
 	

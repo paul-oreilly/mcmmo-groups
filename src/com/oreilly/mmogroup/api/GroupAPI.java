@@ -16,7 +16,7 @@ import com.oreilly.mmogroup.errors.PluginNotEnabled;
 
 public class GroupAPI {
 	
-	static public boolean DEBUG = true;
+	static public boolean DEBUG = false;
 	
 	
 	/*static public boolean changeName( String currentName, String newName ) throws PluginNotEnabled {
@@ -203,14 +203,14 @@ public class GroupAPI {
 	}
 	
 	
-	static public Set< SkillType > getSpecialitySkills( String groupName ) throws PluginNotEnabled {
-		checkEnabled();
-		if ( DEBUG )
-			MMOGroup.instance.log.finer( "API Call: getSpecialitySkills for " + groupName );
-		GroupRecord record = MMOGroup.instance.groups.getGroup( groupName );
-		return record.getSpecialitySkills();
-	}
-	
+	/*	static public Set< SkillType > getSpecialitySkills( String groupName ) throws PluginNotEnabled {
+			checkEnabled();
+			if ( DEBUG )
+				MMOGroup.instance.log.finer( "API Call: getSpecialitySkills for " + groupName );
+			GroupRecord record = MMOGroup.instance.groups.getGroup( groupName );
+			return record.getSpecialitySkills();
+		}
+		*/
 	
 	static public Double getSkillBonus( String groupName, SkillType skill ) throws PluginNotEnabled {
 		checkEnabled();
@@ -236,6 +236,24 @@ public class GroupAPI {
 			MMOGroup.instance.log.finer( "API Call: changeSpecialitySkill for " + record.getName() + ":" +
 					specialityName + " -> " + skill.toString() );
 		return record.setSpecialitySkill( specialityName, skill );
+	}
+	
+	
+	static public void changeSpecialityRequirement( String groupName, String specialityName, int powerLevelRequirement )
+			throws PluginNotEnabled {
+		checkEnabled();
+		GroupRecord record = MMOGroup.instance.groups.getGroup( groupName );
+		changeSpecialityRequirement( record, specialityName, powerLevelRequirement );
+	}
+	
+	
+	static public void changeSpecialityRequirement( GroupRecord record, String specialityName, int powerLevelRequirement )
+			throws PluginNotEnabled {
+		checkEnabled();
+		if ( DEBUG )
+			MMOGroup.instance.log.finer( "API Call: changeSpecialityRequirement for " + record.getName() + " to " +
+					powerLevelRequirement );
+		record.setSpecialityRequiredPowerLevel( specialityName, powerLevelRequirement );
 	}
 	
 	

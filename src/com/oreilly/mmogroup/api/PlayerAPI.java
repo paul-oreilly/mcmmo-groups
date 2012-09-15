@@ -11,7 +11,7 @@ import com.oreilly.mmogroup.events.PlayerJoinGroupEvent;
 
 public class PlayerAPI {
 	
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 	
 	
 	static public void joinGroup( Player player, String groupName ) throws PluginNotEnabled {

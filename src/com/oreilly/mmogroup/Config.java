@@ -12,6 +12,7 @@ public class Config {
 	File groupDataFile = null;
 	File playerDataFile = null;
 	File translationDirectory = null;
+	File defaultTranslationFile = null;
 	
 	public Double specialisationBonus = (double)3;
 	public boolean teleportOnJoin = false;
@@ -34,6 +35,7 @@ public class Config {
 		groupDataFile = new File( plugin.getDataFolder() + File.separator + "groups.yml" );
 		playerDataFile = new File( plugin.getDataFolder() + File.separator + "players.yml" );
 		translationDirectory = new File( plugin.getDataFolder() + File.separator + "translations" );
+		defaultTranslationFile = new File( translationDirectory + File.separator + "default.yml" );
 		if ( !translationDirectory.exists() )
 			translationDirectory.mkdirs();
 		

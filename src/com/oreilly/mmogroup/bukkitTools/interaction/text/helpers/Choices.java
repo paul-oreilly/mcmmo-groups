@@ -9,8 +9,7 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
-
-
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 
 
 public class Choices {
@@ -66,6 +65,11 @@ public class Choices {
 	}
 	
 	
+	public int getChoiceCount() {
+		return orderedChoices.size();
+	}
+	
+	
 	public Choice addInternalChoice( String text, String returnValue ) {
 		return addInternalChoice( orderedChoices.size() + 1, text, returnValue );
 	}
@@ -105,8 +109,41 @@ public class Choices {
 	}
 	
 	
+	public Choice addCancel( int number ) {
+		return addCancel( number, "Cancel" );
+	}
+	
+	
+	public Choice addCancel() {
+		return addCancel( orderedChoices.size() + 1, "Cancel" );
+	}
+	
+	
+	public Choice addCancel( String text ) {
+		return addCancel( orderedChoices.size() + 1, text );
+	}
+	
+	
+	public Choice addCancel( int number, String text ) {
+		return addFail( number, text );
+	}
+	
+	
+	public Choice addFail( String text ) {
+		return addFail( orderedChoices.size() + 1, text );
+	}
+	
+	
+	public Choice addFail( int number, String text ) {
+		ChoiceFailure choice = new ChoiceFailure( this, text );
+		orderedChoices.put( number, choice );
+		choicesByKey.put( Integer.toString( number ), choice );
+		return choice;
+	}
+	
+	
 	public String takeAction( InteractionPage page, Interaction interaction, Object data ) throws AbortInteraction,
-			ContextDataRequired, GeneralInteractionError {
+			ContextDataRequired, GeneralInteractionError, PageFailure {
 		String key = data.toString().trim();
 		Choice choice = choicesByKey.get( key );
 		if ( choice == null )
@@ -121,6 +158,10 @@ public class Choices {
 		if ( choice instanceof ChoiceInternal ) {
 			interaction.context.remove( getChoiceKey( page ) );
 			return page.takeAction( interaction, ( (ChoiceInternal)choice ).returnValue );
+		}
+		if ( choice instanceof ChoiceFailure ) {
+			interaction.context.remove( getChoiceKey( page ) );
+			throw new PageFailure( ( (ChoiceFailure)choice ).message );
 		}
 		// otherwise...
 		throw new GeneralInteractionError( "Unsupported choice type" );

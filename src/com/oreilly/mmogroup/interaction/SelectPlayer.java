@@ -2,6 +2,7 @@ package com.oreilly.mmogroup.interaction;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choice;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 
@@ -24,7 +26,7 @@ public class SelectPlayer extends InteractionPage {
 	
 	
 	@Override
-	public Choices generateChoices( Interaction interaction ) throws AbortInteraction {
+	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, PageFailure {
 		Choices choices = new Choices( this, interaction );
 		List< String > shortNames = new LinkedList< String >();
 		String playerName;
@@ -38,8 +40,11 @@ public class SelectPlayer extends InteractionPage {
 				shortNames.add( shortName );
 		}
 		// add active players to the front of the list..
-		for ( Player player : Bukkit.getOnlinePlayers() ) {
+		Player[] onlinePlayers = Bukkit.getOnlinePlayers();
+		ConcurrentSkipListSet< String > onlinePlayerNames = new ConcurrentSkipListSet< String >();
+		for ( Player player : onlinePlayers ) {
 			playerName = player.getName();
+			onlinePlayerNames.add( playerName );
 			Choice choice = choices.addInternalChoice( playerName, playerName );
 			String shortName = playerName.toLowerCase().substring( 0, 2 );
 			if ( shortNames.contains( shortName ) ) {
@@ -49,8 +54,11 @@ public class SelectPlayer extends InteractionPage {
 		// add offline players at the end of the list
 		for ( OfflinePlayer player : Bukkit.getOfflinePlayers() ) {
 			playerName = player.getName();
-			choices.addInternalChoice( playerName + " (offline)", playerName );
+			if ( !onlinePlayerNames.contains( playerName ) )
+				choices.addInternalChoice( playerName + " (offline)", playerName );
 		}
+		if ( choices.getChoiceCount() == 0 )
+			throw new PageFailure( "Right now, there are no players to choose from" );
 		return choices;
 	}
 	

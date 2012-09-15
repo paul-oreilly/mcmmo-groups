@@ -56,20 +56,20 @@ public class MMOGroup extends JavaPlugin {
 		// get our logger working
 		log = new PluginLogger( this );
 		
-		// copy over any resources for use
-		try {
-			saveResource( "translations/default.yml", false );
-		} catch ( IllegalArgumentException error ) {
-			log.warning( "Failed to location default translation file within the plugin .jar file" );
-		}
+		// load config info
+		config = new Config( this );
+		
+		// load the io handler
+		io = new IO( this );
+		
+		// reset the default translation
+		io.resetDefaultTranslation();
 		
 		// get reference to mcMMO
 		// TODO: Null check etc
 		mcMMO = (mcMMO)getServer().getPluginManager().getPlugin( "mcMMO" );
 		
 		// load up the main classes
-		config = new Config( this );
-		io = new IO( this );
 		groups = new Groups( this );
 		players = new Players( this );
 		translations = new Translations( this );

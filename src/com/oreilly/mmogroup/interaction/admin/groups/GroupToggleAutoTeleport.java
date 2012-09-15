@@ -8,7 +8,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.GroupHelper;
 
@@ -30,15 +32,16 @@ public class GroupToggleAutoTeleport extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
 		GroupHelper helper = new GroupHelper( interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		if ( helper.record.getAutoTeleport() ) {
-			choices.addInternalChoice( "Keep auto-teleport enabled", "cancel" );
-			choices.addInternalChoice( "Disable auto-teleport", "disable" );
+			choices.addInternalChoice( variable.define( "keep_enabled" ), "cancel" );
+			choices.addInternalChoice( variable.define( "disable" ), "disable" );
 		} else {
-			choices.addInternalChoice( "Enable auto-teleport", "enable" );
-			choices.addInternalChoice( "Keep auto-teleport disabled", "cancel" );
+			choices.addInternalChoice( variable.define( "enable" ), "enable" );
+			choices.addInternalChoice( variable.define( "keep_disabled" ), "cancel" );
 		}
 		return choices;
 	}

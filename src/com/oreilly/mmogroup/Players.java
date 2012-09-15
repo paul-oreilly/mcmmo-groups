@@ -1,6 +1,8 @@
 package com.oreilly.mmogroup;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 
 // TODO: Permission check - if players do not have the "join" permission, auto-remove them from any groups
@@ -26,6 +28,11 @@ public class Players {
 	}
 	
 	
+	public void save( List< PlayerRecord > records ) {
+		plugin.io.savePlayerRecords( records );
+	}
+	
+	
 	public void addPlayer( PlayerRecord player ) {
 		players.put( player.name, player );
 	}
@@ -42,13 +49,26 @@ public class Players {
 	
 	
 	// internal functions, linkages with record data
-	public void _internal_PlayerRecordGroupUpdate( PlayerRecord record, String oldGroup ) {
+	void _internal_PlayerRecordGroupUpdate( PlayerRecord record, String oldGroup ) {
 		save( record );
 	}
 	
 	
-	public void _internal_PlayerRecordSpecialisationUpdate( PlayerRecord record, String oldSpecialisation ) {
+	void _internal_PlayerRecordSpecialisationUpdate( PlayerRecord record, String oldSpecialisation ) {
 		save( record );
+	}
+	
+	
+	void specialityNameChange( GroupRecord groupRecord, String oldName, String newName ) {
+		String groupName = groupRecord.getName();
+		LinkedList< PlayerRecord > changedRecords = new LinkedList< PlayerRecord >();
+		for ( PlayerRecord playerRecord : players.values() )
+			if ( playerRecord.groupName.contentEquals( groupName ) )
+				if ( playerRecord.specialisation.contentEquals( oldName ) ) {
+					playerRecord.specialisation = newName;
+					changedRecords.add( playerRecord );
+				}
+		save( changedRecords );
 	}
 	
 }

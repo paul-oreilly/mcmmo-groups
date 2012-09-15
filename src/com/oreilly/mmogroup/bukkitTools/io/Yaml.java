@@ -40,8 +40,6 @@ public class Yaml {
 	public static YamlConfiguration loadYamlFile( File file, Logger errorLog ) {
 		if ( !file.exists() ) {
 			try {
-				if ( errorLog != null )
-					errorLog.info( "File " + file.getAbsolutePath() + " does not exist, creating.." );
 				File parent = file.getParentFile();
 				if ( file.getParentFile().exists() == false ) {
 					parent.mkdirs();

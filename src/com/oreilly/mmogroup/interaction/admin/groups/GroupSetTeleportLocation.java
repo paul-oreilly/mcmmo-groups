@@ -10,7 +10,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.GroupHelper;
 
@@ -32,18 +34,17 @@ public class GroupSetTeleportLocation extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
-		choices.addInternalChoice( "Set to my current location", "current" );
-		choices.addInternalChoice( "Cancel", "cancel" );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
+		choices.addInternalChoice( variable.define( "current_location" ), "current" );
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	
 	
 	@Override
 	public String takeAction( Interaction interaction, String input ) throws GeneralInteractionError {
-		if ( input.equalsIgnoreCase( "cancel" ) )
-			return null;
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
 			if ( interaction.user instanceof Player ) {

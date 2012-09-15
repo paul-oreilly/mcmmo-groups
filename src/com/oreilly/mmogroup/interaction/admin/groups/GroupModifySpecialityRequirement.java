@@ -6,40 +6,33 @@ import com.oreilly.mmogroup.api.GroupAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
-import com.oreilly.mmogroup.bukkitTools.interaction.text.validator.DoubleValidator;
-import com.oreilly.mmogroup.bukkitTools.io.Numbers;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.validator.IntValidator;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.GroupHelper;
 
 
-public class GroupModifySpecialAmount extends InteractionPage {
+public class GroupModifySpecialityRequirement extends InteractionPage {
 	
-	public GroupModifySpecialAmount() {
+	public GroupModifySpecialityRequirement() {
 		autoPage();
-		withValidator( new DoubleValidator() );
+		withValidator( new IntValidator() );
 	}
 	
 	
 	@Override
 	public HashMap< String, Object > getVariables( Interaction interaction ) {
 		GroupHelper helper = new GroupHelper( interaction );
-		HashMap< String, Object > variables = helper.getVariables();
-		if ( helper.selectedSpecialityName != null ) {
-			double currentBonusFactor = helper.record.getSpecialitySkillFactor( helper.selectedSpecialityName );
-			variables.put( "current_bonus_factor", Numbers.doubleAsPercentage( currentBonusFactor, 2 ) );
-		}
-		return variables;
+		return helper.getVariables();
 	}
 	
 	
 	@Override
 	public String acceptValidatedInput( Interaction interaction, Object data ) throws GeneralInteractionError {
-		// sets the new bonus factor for the selected skill
+		Integer requirement = (Integer)data;
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
-			GroupAPI.changeSpecialityFactor( helper.record, helper.selectedSpecialityName, (Double)data );
-			return "The experience for " + helper.selectedSpecialityName + " is now set at " +
-					Numbers.doubleAsPercentage( (Double)data, 2 );
+			GroupAPI.changeSpecialityRequirement( helper.record, helper.selectedSpecialityName, requirement );
+			return "A power level of " + requirement + " is now required for " + helper.selectedSpecialityName;
 		} catch ( PluginNotEnabled e ) {
 			throw new GeneralInteractionError( "Plugin not enabled" );
 		}

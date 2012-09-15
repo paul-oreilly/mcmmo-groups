@@ -1,7 +1,7 @@
 main: com.oreilly.mmogroup.MMOGroup
 author: Paul O'Reilly
 name: MMOGroup
-version: 0.2
+version: 0.23
 depend: [mcMMO, Vault]
 
 commands:

@@ -96,13 +96,13 @@ public class PlayerHelper {
 	
 	public HashMap< String, Object > getVariables() {
 		HashMap< String, Object > variables = new HashMap< String, Object >();
-		variables.put( "playerName", playerRecord.getName() );
+		variables.put( "player_name", playerRecord.getName() );
 		String specialisation = playerRecord.getSpecialisation();
-		variables.put( "playerSpecial", ( specialisation == null ) ?
+		variables.put( "player_special", ( specialisation == null ) ?
 				"none" : specialisation.toString() );
-		variables.put( "playerGroup", ( playersGroup == null ) ?
+		variables.put( "player_group", ( playersGroup == null ) ?
 				"none" : playersGroup.getName() );
-		variables.put( "playerPowerLevel", powerLevel );
+		variables.put( "player_power_level", powerLevel );
 		return variables;
 	}
 	

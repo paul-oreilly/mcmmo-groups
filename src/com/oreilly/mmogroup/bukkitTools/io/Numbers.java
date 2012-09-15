@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import org.apache.commons.lang.StringUtils;
 
+
 public class Numbers {
 	
 	public static String doubleAsPercentage( double value ) {
@@ -19,7 +20,8 @@ public class Numbers {
 	
 	public static Double doubleFromString( String data ) {
 		// if the string ends with "%", we go with a percentage..
-		data = data.trim();
+		// replace all the "," characters...
+		data = data.trim().replace( ",", "" );
 		boolean isDouble = data.endsWith( "%" );
 		if ( isDouble )
 			data = data.replace( "%", "" );

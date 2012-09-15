@@ -26,7 +26,7 @@ public class GroupModifyBonus extends InteractionPage {
 		HashMap< String, Object > variables = helper.getVariables();
 		if ( helper.selectedSkill != null ) {
 			double currentBonusFactor = helper.record.getSkillBonus( helper.selectedSkill );
-			variables.put( "currentBonusFactor", Numbers.doubleAsPercentage( currentBonusFactor, 2 ) );
+			variables.put( "current_bonus_factor", Numbers.doubleAsPercentage( currentBonusFactor, 2 ) );
 		}
 		return variables;
 	}
@@ -37,8 +37,6 @@ public class GroupModifyBonus extends InteractionPage {
 		// sets the new bonus factor for the selected skill
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
-			// DEBUG:
-			System.out.println( "DEBUG: GroupModifyBonus - value is " + data );
 			GroupAPI.setBonusAmount( helper.record, helper.selectedSkill, (Double)data );
 			return "The experience for " + helper.selectedSkill.toString().toLowerCase() + " is now set at " +
 					Numbers.doubleAsPercentage( (Double)data, 2 );

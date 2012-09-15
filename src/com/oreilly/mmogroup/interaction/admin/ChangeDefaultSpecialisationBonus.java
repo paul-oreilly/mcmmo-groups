@@ -22,7 +22,7 @@ public class ChangeDefaultSpecialisationBonus extends InteractionPage {
 	@Override
 	public HashMap< String, Object > getVariables( Interaction interaction ) {
 		HashMap< String, Object > variables = new HashMap< String, Object >();
-		variables.put( "currentSpecialBonus",
+		variables.put( "current_special_bonus",
 				Numbers.doubleAsPercentage( MMOGroup.instance.config.specialisationBonus ) );
 		return variables;
 	}
@@ -35,7 +35,7 @@ public class ChangeDefaultSpecialisationBonus extends InteractionPage {
 			MMOGroup.instance.config.specialisationBonus = (Double)data;
 			return "The new bonus is " + Numbers.doubleAsPercentage( (Double)data, 2 );
 		} else {
-			interaction.pageWaitingForInput = true;
+			interaction.holdInteraction = true;
 			throw new GeneralInteractionError( "Unable to get a number from " + data );
 		}
 	}

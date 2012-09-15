@@ -43,6 +43,17 @@ public class IO {
 	}
 	
 	
+	public void resetDefaultTranslation() {
+		if ( plugin.config.defaultTranslationFile.exists() )
+			plugin.config.defaultTranslationFile.delete();
+		try {
+			plugin.saveResource( "translations/default.yml", false );
+		} catch ( IllegalArgumentException error ) {
+			plugin.log.warning( "Failed to locate default translation file within the plugin .jar file" );
+		}
+	}
+	
+	
 	public void loadAll() {
 		loadGroupRecords();
 		loadPlayerRecords();
@@ -60,10 +71,8 @@ public class IO {
 					continue; // TODO: Throw error
 				GroupRecord record = new GroupRecord( groupName, plugin );
 				// get other data
-				record.teleportLocation = Locations.fromString(
-						section.getString( GroupRecordConstant.teleportLocation ),
-						fileKey + " in " + plugin.config.groupDataFile.getAbsolutePath(),
-						plugin.log );
+				record.teleportLocation = Locations.fromConfigurationSection(
+						section.getConfigurationSection( GroupRecordConstant.teleportLocation ) );
 				record.teleportOnJoin = section.getBoolean( GroupRecordConstant.teleportOnJoin, false );
 				List< String > bonusRecords = section.getStringList( GroupRecordConstant.bonuses );
 				if ( bonusRecords != null )
@@ -72,6 +81,38 @@ public class IO {
 								plugin.config.groupDataFile.getAbsolutePath(), plugin.log );
 						if ( bonus != null )
 							record.addSkillBonus( bonus.type, bonus.amount );
+					}
+				ConfigurationSection specialityConfig = section
+						.getConfigurationSection( GroupRecordConstant.speciality );
+				if ( specialityConfig != null )
+					for ( String key : specialityConfig.getKeys( false ) ) {
+						ConfigurationSection currentSpecial = specialityConfig.getConfigurationSection( key );
+						String specialName = currentSpecial.getString( GroupRecordConstant.specialityName );
+						Double specialAmount = Numbers.doubleFromString( currentSpecial
+								.getString( GroupRecordConstant.specialityAmount, "200%" ) );
+						String skillName = currentSpecial.getString( GroupRecordConstant.specialitySkill );
+						SkillType specialSkill = null;
+						if ( skillName != null )
+							specialSkill = SkillType.valueOf( skillName.toUpperCase() );
+						Integer specialRequirement = currentSpecial.getInt( GroupRecordConstant.specialityRequirement,
+								0 );
+						if ( ( specialName != null ) & ( specialAmount != null ) & ( specialSkill != null ) &
+								( specialRequirement != null ) )
+							record.addSpecialityOption( specialName, specialSkill, specialRequirement, specialAmount );
+						else {
+							String error = "Malformed group speciality record:\n" +
+									"  Name: " +
+									( ( specialName == null ) ? "NULL" : specialName ) +
+									"  Amount: " +
+									( ( specialAmount == null ) ? "NULL" : specialAmount ) +
+									"  Skill: " +
+									( ( specialSkill == null ) ?
+											( ( specialName == null ) ? "NULL" : specialName + " (UNRESOLVED" )
+											: WordUtils.capitalizeFully( specialSkill.toString() ) ) +
+									"  Required Power Level: " +
+									( ( specialRequirement == null ) ? "NULL:" : specialRequirement );
+							plugin.log.warning( error );
+						}
 					}
 				// add the group to the system
 				plugin.groups.addGroup( record );
@@ -102,6 +143,11 @@ public class IO {
 	}
 	
 	
+	public void savePlayerRecords( List< PlayerRecord > records ) {
+		saveAllPlayers();
+	}
+	
+	
 	public void saveGroupRecord( GroupRecord record ) {
 		saveAllGroups();
 	}
@@ -110,8 +156,7 @@ public class IO {
 	public void saveAllGroups() {
 		// clear the file before saving data
 		if ( plugin.config.groupDataFile.exists() )
-			;
-		plugin.config.groupDataFile.delete();
+			plugin.config.groupDataFile.delete();
 		// write the new file
 		FileConfiguration config = Yaml.loadYamlFile( plugin.config.groupDataFile, plugin.log );
 		if ( config != null ) {
@@ -119,8 +164,8 @@ public class IO {
 				String fileKey = record.name;
 				config.set( fileKey + "." + GroupRecordConstant.name, record.name );
 				if ( record.teleportLocation != null )
-					config.set( fileKey + "." + GroupRecordConstant.teleportLocation,
-							record.teleportLocation.toString() );
+					Locations.addToConfiguration( config, fileKey + "." + GroupRecordConstant.teleportLocation,
+							record.teleportLocation );
 				config.set( fileKey + "." + GroupRecordConstant.teleportOnJoin, record.teleportOnJoin );
 				if ( record.bonuses != null )
 					if ( record.bonuses.size() > 0 ) {
@@ -128,6 +173,19 @@ public class IO {
 						for ( SkillType type : record.bonuses.keySet() )
 							bonusRecords.add( new SkillBonus( type, record.bonuses.get( type ) ).toSaveString() );
 						config.set( fileKey + "." + GroupRecordConstant.bonuses, bonusRecords );
+					}
+				if ( record.specialitiesByName != null )
+					if ( record.specialitiesByName.size() > 0 ) {
+						for ( String name : record.getSpecialityNames() ) {
+							String key = fileKey + "." + GroupRecordConstant.speciality + "." + name + ".";
+							config.set( key + GroupRecordConstant.specialityName, name );
+							config.set( key + GroupRecordConstant.specialitySkill,
+									WordUtils.capitalizeFully( record.getSpecialitySkill( name ).toString() ) );
+							config.set( key + GroupRecordConstant.specialityAmount,
+									Numbers.doubleAsPercentage( record.getSpecialitySkillFactor( name ), 2 ) );
+							config.set( key + GroupRecordConstant.specialityRequirement,
+									record.getSpecialityRequiredPowerLevel( name ) );
+						}
 					}
 			}
 		}
@@ -205,6 +263,11 @@ class GroupRecordConstant {
 	static public final String teleportLocation = "teleport.location";
 	static public final String teleportOnJoin = "teleport.teleportOnJoin";
 	static public final String bonuses = "bonuses";
+	static public final String speciality = "Specialities";
+	static public final String specialityName = "name";
+	static public final String specialitySkill = "skill";
+	static public final String specialityRequirement = "powerLevelRequired";
+	static public final String specialityAmount = "experienceEffect";
 }
 
 

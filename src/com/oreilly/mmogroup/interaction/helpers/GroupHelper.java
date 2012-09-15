@@ -65,11 +65,10 @@ public class GroupHelper {
 						String.class, fromContext, Constants.SELECTED_GROUP_SKILL, false );
 				if ( skillName != null )
 					selectedSkill = SkillType.valueOf( skillName );
-				String specialitySkillName = fromContext.getContextData(
+				selectedSpecialityName = fromContext.getContextData(
 						String.class, fromContext, Constants.SELECTED_GROUP_SPECIAL, false );
-				if ( specialitySkillName != null )
-					selectedSpecialitySkill = SkillType.valueOf( specialitySkillName.toUpperCase() );
-				selectedSpecialityName = record.getSpecialityName( selectedSpecialitySkill );
+				if ( selectedSpecialityName != null )
+					selectedSpecialitySkill = record.getSpecialitySkill( selectedSpecialityName );
 			} catch ( ContextDataRequired error )
 			{
 			}
@@ -83,29 +82,35 @@ public class GroupHelper {
 			System.out.println( "WARNING! Record is null!" );
 			return variables;
 		}
-		variables.put( "groupName", record.getName() );
+		variables.put( "group_name", record.getName() );
 		Set< SkillType > bonuses = record.getSkillBonuses();
 		ArrayList< String > formattedBonuses = new ArrayList< String >();
 		for ( SkillType skill : bonuses )
 			formattedBonuses.add( WordUtils.capitalizeFully( skill.toString() ) );
-		variables.put( "groupBonusLine", StringUtils.join( formattedBonuses, ", " ) );
-		variables.put( "groupBonusList", StringUtils.join( formattedBonuses, "\n" ) );
+		variables.put( "group_bonus_line", StringUtils.join( formattedBonuses, ", " ) );
+		variables.put( "group_bonus_list", StringUtils.join( formattedBonuses, "\n" ) );
 		ArrayList< String > detailedBonuses = new ArrayList< String >();
 		for ( SkillType skill : bonuses )
 			detailedBonuses.add( WordUtils.capitalizeFully( skill.toString() ) +
 					" (" + Numbers.doubleAsPercentage( record.getSkillBonus( skill ) ) + ")" );
-		variables.put( "groupDetailedBonusesLine", StringUtils.join( detailedBonuses, ", " ) );
-		variables.put( "groupDetailedBonsuesList", StringUtils.join( detailedBonuses, "\n" ) );
+		variables.put( "group_detailed_bonuses_line", StringUtils.join( detailedBonuses, ", " ) );
+		variables.put( "group_detailed_bonsues_list", StringUtils.join( detailedBonuses, "\n" ) );
 		List< String > specialityNames = record.getSpecialityNames();
-		variables.put( "groupSepcialLine", StringUtils.join( specialityNames, ", " ) );
-		variables.put( "groupSpecialList", StringUtils.join( specialityNames, "\n" ) );
+		variables.put( "group_special_line", StringUtils.join( specialityNames, ", " ) );
+		variables.put( "group_special_list", StringUtils.join( specialityNames, "\n" ) );
 		Location teleportLocation = record.getTeleportLocation();
 		if ( teleportLocation != null )
-			variables.put( "groupTeleportLocation", teleportLocation.getWorld().getName() + " " +
-					teleportLocation.getBlockX() + teleportLocation.getBlockY() + teleportLocation.getBlockZ() );
+			variables.put( "group_teleport_location",
+					teleportLocation.getWorld().getName() + " x" +
+							teleportLocation.getBlockX() + ", y" + teleportLocation.getBlockY() + " z" +
+							teleportLocation.getBlockZ() );
 		else
-			variables.put( "groupTeleportLocation", "none" );
+			variables.put( "group_teleport_location", "none" );
 		// TODO: Variables for the currently selected speciality (name, skill, bonus amount..)
+		if ( selectedSpecialityName != null ) {
+			variables.put( "group_selected_speciality", selectedSpecialityName );
+			variables.put( "group_selected_speciality_skill", selectedSpecialitySkill );
+		}
 		// TODO: "AutoTeleport" status (enabled/disabled)
 		return variables;
 	}

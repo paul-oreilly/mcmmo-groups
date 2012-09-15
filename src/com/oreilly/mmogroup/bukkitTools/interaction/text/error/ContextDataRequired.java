@@ -11,8 +11,7 @@ public class ContextDataRequired extends Exception {
 	public ContextDataRequired( String requiresKey, Class requiredType ) {
 		this.key = requiresKey;
 		this.classType = requiredType.toString();
-		// DEBUG:
-		System.out.println( "com.oreilly.mmogroup.bukkitTools ERROR: Context data required, " + requiresKey + " as " +
+		System.out.println( this.getClass().getName() + "ERROR: Context data required, " + requiresKey + " as " +
 				requiredType.toString() );
 	}
 	

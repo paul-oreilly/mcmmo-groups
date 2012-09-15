@@ -23,7 +23,7 @@ public class CreateGroup extends InteractionPage {
 	public HashMap< String, Object > getVariables( Interaction interaction ) {
 		HashMap< String, Object > variables = new HashMap< String, Object >();
 		try {
-			variables.put( "currentGroups", StringUtils.join( GroupAPI.getAllGroups(), ", " ) );
+			variables.put( "current_groups", StringUtils.join( GroupAPI.getAllGroups(), ", " ) );
 		} catch ( PluginNotEnabled e ) {
 			e.printStackTrace();
 		}

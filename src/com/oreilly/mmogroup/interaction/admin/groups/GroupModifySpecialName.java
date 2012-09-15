@@ -8,6 +8,7 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
 import com.oreilly.mmogroup.bukkitTools.io.Numbers;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
+import com.oreilly.mmogroup.interaction.Constants;
 import com.oreilly.mmogroup.interaction.helpers.GroupHelper;
 
 
@@ -24,7 +25,7 @@ public class GroupModifySpecialName extends InteractionPage {
 		HashMap< String, Object > variables = helper.getVariables();
 		if ( helper.selectedSkill != null ) {
 			double currentBonusFactor = helper.record.getSkillBonus( helper.selectedSkill );
-			variables.put( "currentBonusFactor", Numbers.doubleAsPercentage( currentBonusFactor, 2 ) );
+			variables.put( "current_bonus_factor", Numbers.doubleAsPercentage( currentBonusFactor, 2 ) );
 		}
 		return variables;
 	}
@@ -36,6 +37,7 @@ public class GroupModifySpecialName extends InteractionPage {
 		GroupHelper helper = new GroupHelper( interaction );
 		try {
 			GroupAPI.changeSpecialityName( helper.record, helper.selectedSpecialityName, data.toString().trim() );
+			interaction.context.put( Constants.SELECTED_GROUP_SPECIAL, data.toString() );
 			return helper.selectedSpecialityName + " is now known as " +
 					data.toString();
 		} catch ( PluginNotEnabled e ) {

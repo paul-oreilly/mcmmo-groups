@@ -6,7 +6,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.Constants;
 
@@ -22,10 +24,11 @@ public class DeleteGroup extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
-		choices.addInternalChoice( "Yes, I'm sure.", "yes" ).withAlias( "yes" ).withAlias( "y" );
-		choices.addInternalChoice( "No!", "no" ).withAlias( "no" ).withAlias( "n" );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
+		choices.addInternalChoice( variable.define( "yes" ), "yes" ).withAlias( "yes" ).withAlias( "y" );
+		choices.addInternalChoice( variable.define( "no" ), "no" ).withAlias( "no" ).withAlias( "n" );
 		return choices;
 	}
 	

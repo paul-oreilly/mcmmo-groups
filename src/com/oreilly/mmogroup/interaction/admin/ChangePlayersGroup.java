@@ -9,7 +9,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 
@@ -51,17 +53,19 @@ public class ChangePlayersGroup extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		try {
 			for ( String groupName : GroupAPI.getAllGroupNames() )
 				choices.addInternalChoice( groupName, groupName );
 			// also add an option for "No group at all"
-			choices.addInternalChoice( "None", "none" );
+			choices.addInternalChoice( variable.define( "none" ), "none" );
 		} catch ( PluginNotEnabled e ) {
 			e.printStackTrace();
 			throw new GeneralInteractionError( "Plugin not enabled" );
 		}
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	

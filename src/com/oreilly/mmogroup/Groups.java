@@ -59,8 +59,14 @@ public class Groups {
 	
 	
 	// internal functions, linkages with record data
-	public void _internal_GroupRecordUpdate( GroupRecord record ) {
+	void _internal_GroupRecordUpdate( GroupRecord record ) {
 		save( record );
+	}
+	
+	
+	void _internal_GroupRecordSpecialityNameUpdate( GroupRecord record, String oldName, String newName ) {
+		save( record );
+		plugin.players.specialityNameChange( record, oldName, newName );
 	}
 	
 }

@@ -19,6 +19,11 @@ public class VariableTool {
 		// variable results can contain variables themselves (eg translations)
 		// so we keep running over the string until no variables are left.
 		
+		if ( text == null ) {
+			System.out.println( VariableTool.class.getName() + " NULL arguement passed for text." );
+			return "";
+		}
+		
 		String current = text;
 		String result = "";
 		int currentPosition = 0;
@@ -52,6 +57,8 @@ public class VariableTool {
 					}
 					if ( value != null )
 						result += value.toString();
+					else
+						result += "!{!%" + variableString + "}";
 				}
 				currentPosition = variableTagEnds + 1;
 			}
@@ -59,7 +66,7 @@ public class VariableTool {
 			result = "";
 			currentPosition = 0;
 		}
-		return current;
+		return current.replace( "!{!%", "{%" );
 	}
 	
 }

@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class PaginationAssistant {
 	
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	
 	public LinkedList< String > pages = new LinkedList< String >();
 	public boolean required = false;
@@ -25,8 +25,6 @@ public class PaginationAssistant {
 		// at this point, we need to allow 2 extra lines for adding "Page x of y",
 		// and however many lines the header for each page is
 		maxLines -= ( 2 + header.split( "\n" ).length );
-		// DEBUG:
-		System.out.print( "DEBUG: Max lines value is " + maxLines );
 		// find a blank line to split the page on. (Or split at half way, whichever comes first.)
 		LinkedList< String > queue = new LinkedList< String >();
 		for ( String line : splitInput )

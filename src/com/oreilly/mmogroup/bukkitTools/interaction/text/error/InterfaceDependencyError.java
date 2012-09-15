@@ -8,7 +8,6 @@ public class InterfaceDependencyError extends Exception {
 	
 	public InterfaceDependencyError( String interfaceRequired ) {
 		this.interfaceRequired = interfaceRequired;
-		// DEBUG:
-		System.out.println( "com.oreilly.mmogroup.bukkitTools ERROR: Interface dependency error for " + interfaceRequired );
+		System.out.println( this.getClass().getName() + " ERROR: Interface dependency error for " + interfaceRequired );
 	}
 }

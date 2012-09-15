@@ -11,14 +11,13 @@ import org.bukkit.Location;
 import com.gmail.nossr50.datatypes.SkillType;
 
 
+// TODO: Later, have null input's to functions throw errors.
+
 public class GroupRecord {
 	
 	String name;
 	HashMap< SkillType, Double > bonuses = new HashMap< SkillType, Double >();
-	// TODO: Add "Min power level" to match each speciality skill later
 	HashMap< String, Speciality > specialitiesByName = new HashMap< String, Speciality >();
-	HashMap< SkillType, Speciality > specialitiesBySkill = new HashMap< SkillType, Speciality >();
-	//LinkedList< SkillType > specialityOptions = new LinkedList< SkillType >();
 	Location teleportLocation = null;
 	boolean teleportOnJoin = false;
 	
@@ -42,23 +41,27 @@ public class GroupRecord {
 	}*/
 	
 	public void addSpecialityOption( String name, SkillType type, int requiredPowerLevel, double skillFactor ) {
+		if ( ( name == null ) | ( type == null ) )
+			return;
 		if ( specialitiesByName.containsKey( name ) )
 			return;
-		if ( specialitiesBySkill.containsKey( type ) )
-			return;
+		/*		if ( specialitiesBySkill.containsKey( type ) )
+					return; */
 		else {
 			Speciality special = new Speciality( name, type, requiredPowerLevel, skillFactor );
 			specialitiesByName.put( name, special );
-			specialitiesBySkill.put( type, special );
+			//specialitiesBySkill.put( type, special );
 			plugin.groups._internal_GroupRecordUpdate( this );
 		}
 	}
 	
 	
 	public boolean removeSpecialityOption( String name ) {
+		if ( name == null )
+			return false;
 		Speciality special = specialitiesByName.remove( name );
 		if ( special != null ) {
-			specialitiesBySkill.remove( special.skill );
+			//specialitiesBySkill.remove( special.skill );
 			plugin.groups._internal_GroupRecordUpdate( this );
 			return true;
 		} else
@@ -67,16 +70,15 @@ public class GroupRecord {
 	
 	
 	// TODO: Add to API
-	public boolean removeSpecialityOption( SkillType skill ) {
-		Speciality special = specialitiesBySkill.remove( skill );
-		if ( special != null ) {
-			specialitiesByName.remove( special.name );
-			plugin.groups._internal_GroupRecordUpdate( this );
-			return true;
-		} else
-			return false;
-	}
-	
+	/*	public boolean removeSpecialityOption( SkillType skill ) {
+			Speciality special = specialitiesBySkill.remove( skill );
+			if ( special != null ) {
+				specialitiesByName.remove( special.name );
+				plugin.groups._internal_GroupRecordUpdate( this );
+				return true;
+			} else
+				return false;
+		}*/
 	
 	public List< String > getSpecialityNames() {
 		LinkedList< String > result = new LinkedList< String >();
@@ -86,34 +88,37 @@ public class GroupRecord {
 	
 	
 	//TODO: Add to API
-	public String getSpecialityName( SkillType skill ) {
-		Speciality special = specialitiesBySkill.get( skill );
-		if ( special != null )
-			return special.name;
-		else
-			return null;
-	}
-	
+	/*	public String getSpecialityName( SkillType skill ) {
+			Speciality special = specialitiesBySkill.get( skill );
+			if ( special != null )
+				return special.name;
+			else
+				return null;
+		} */
 	
 	public boolean setSpecialityName( String currentName, String newName ) {
+		if ( ( currentName == null ) | ( newName == null ) )
+			return false;
 		Speciality special = specialitiesByName.remove( currentName );
 		if ( special == null )
 			return false;
+		String oldName = special.name;
 		special.name = newName;
 		specialitiesByName.put( newName, special );
-		plugin.groups._internal_GroupRecordUpdate( this );
+		plugin.groups._internal_GroupRecordSpecialityNameUpdate( this, oldName, newName );
 		return true;
 	}
 	
 	
-	public Set< SkillType > getSpecialitySkills() {
-		HashSet< SkillType > result = new HashSet< SkillType >();
-		result.addAll( specialitiesBySkill.keySet() );
-		return result;
-	}
-	
+	/*	public Set< SkillType > getSpecialitySkills() {
+			HashSet< SkillType > result = new HashSet< SkillType >();
+			result.addAll( specialitiesBySkill.keySet() );
+			return result;
+		}*/
 	
 	public int getSpecialityRequiredPowerLevel( String name ) {
+		if ( name == null )
+			return -1;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return -1;
@@ -123,6 +128,8 @@ public class GroupRecord {
 	
 	
 	public boolean setSpecialityRequiredPowerLevel( String name, int requiredPowerLevel ) {
+		if ( name == null )
+			return false;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return false;
@@ -135,6 +142,8 @@ public class GroupRecord {
 	
 	
 	public SkillType getSpecialitySkill( String name ) {
+		if ( name == null )
+			return null;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return null;
@@ -144,6 +153,8 @@ public class GroupRecord {
 	
 	
 	public boolean setSpecialitySkill( String name, SkillType skill ) {
+		if ( ( name == null ) | ( skill == null ) )
+			return false;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return false;
@@ -156,6 +167,8 @@ public class GroupRecord {
 	
 	
 	public double getSpecialitySkillFactor( String name ) {
+		if ( name == null )
+			return -1;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return -1;
@@ -165,6 +178,8 @@ public class GroupRecord {
 	
 	
 	public boolean setSpecialitySkillFactor( String name, double skillFactor ) {
+		if ( name == null )
+			return false;
 		Speciality special = specialitiesByName.get( name );
 		if ( special == null )
 			return false;
@@ -177,12 +192,16 @@ public class GroupRecord {
 	
 	
 	public void addSkillBonus( SkillType type, double amount ) {
+		if ( type == null )
+			return;
 		bonuses.put( type, amount );
 		plugin.groups._internal_GroupRecordUpdate( this );
 	}
 	
 	
 	public void setSkillBonusAmount( SkillType skill, double amount ) {
+		if ( skill == null )
+			return;
 		addSkillBonus( skill, amount );
 	}
 	
@@ -194,12 +213,16 @@ public class GroupRecord {
 	}
 	
 	
-	public double getSkillBonus( SkillType type ) {
+	public Double getSkillBonus( SkillType type ) {
+		if ( type == null )
+			return null;
 		return bonuses.get( type );
 	}
 	
 	
 	public void removeSkillBonus( SkillType type ) {
+		if ( type == null )
+			return;
 		bonuses.remove( type );
 		plugin.groups._internal_GroupRecordUpdate( this );
 	}
@@ -211,6 +234,8 @@ public class GroupRecord {
 	
 	
 	public void addTeleportationLocation( Location location ) {
+		if ( location == null )
+			return;
 		teleportLocation = location;
 		plugin.groups._internal_GroupRecordUpdate( this );
 	}

@@ -2,6 +2,9 @@ package com.oreilly.mmogroup.bukkitTools.interaction.text.formatter;
 
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 
 
 abstract public class Formatter {
@@ -24,7 +27,8 @@ abstract public class Formatter {
 	}
 	
 	
-	public String startFormatting( String s, InteractionPage page, Interaction interaction ) {
+	public String startFormatting( String s, InteractionPage page, Interaction interaction ) throws PageFailure,
+			ContextDataRequired, GeneralInteractionError {
 		s = format( s, page, interaction );
 		if ( nextInChain != null )
 			s = nextInChain.startFormatting( s, page, interaction );
@@ -32,6 +36,7 @@ abstract public class Formatter {
 	}
 	
 	
-	abstract protected String format( String s, InteractionPage page, Interaction interaction );
+	abstract protected String format( String s, InteractionPage page, Interaction interaction ) throws PageFailure,
+			ContextDataRequired, GeneralInteractionError;
 	
 }

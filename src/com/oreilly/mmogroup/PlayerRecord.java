@@ -1,7 +1,5 @@
 package com.oreilly.mmogroup;
 
-
-
 public class PlayerRecord {
 	
 	String name;
@@ -31,6 +29,7 @@ public class PlayerRecord {
 	public void setGroup( String groupName ) {
 		String oldGroup = this.groupName;
 		this.groupName = groupName;
+		this.specialisation = null;
 		plugin.players._internal_PlayerRecordGroupUpdate( this, oldGroup );
 	}
 	

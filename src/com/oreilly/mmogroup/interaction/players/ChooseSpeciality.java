@@ -7,7 +7,11 @@ import org.apache.commons.lang.WordUtils;
 import com.oreilly.mmogroup.api.PlayerAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 
@@ -28,29 +32,27 @@ public class ChooseSpeciality extends InteractionPage {
 	
 	
 	@Override
-	public Choices generateChoices( Interaction interaction ) {
+	public Choices generateChoices( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		Choices choices = new Choices( this, interaction );
 		PlayerHelper helper = new PlayerHelper( interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		for ( String name : helper.getEligableSpecialityOptions() )
 			choices.addInternalChoice( WordUtils.capitalizeFully( name ), name );
-		choices.addInternalChoice( "Cancel", "cancel" );
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	
 	
 	@Override
 	public String takeAction( Interaction interaction, String choice ) {
-		if ( choice.contentEquals( "cancel" ) )
-			return null;
-		else {
-			PlayerHelper helper = new PlayerHelper( interaction );
-			try {
-				PlayerAPI.setSpecialisation( helper.playerRecord, choice );
-			} catch ( PluginNotEnabled e ) {
-				e.printStackTrace();
-			}
-			return null; //TODO: Later, return variable in a context that includes choice..
+		PlayerHelper helper = new PlayerHelper( interaction );
+		try {
+			PlayerAPI.setSpecialisation( helper.playerRecord, choice );
+			return "Your speciality is now \"" + choice + "\"";
+		} catch ( PluginNotEnabled e ) {
+			e.printStackTrace();
 		}
+		return null; //TODO: Later, return variable in a context that includes choice..
 	}
-	
 }

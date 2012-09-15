@@ -6,6 +6,9 @@ import org.bukkit.command.CommandSender;
 
 public class MessageTool {
 	
+	static public final boolean DEBUG = false;
+	
+	
 	public static String tagOpen( String type ) {
 		return "<" + type + "/>";
 	}
@@ -49,6 +52,10 @@ public class MessageTool {
 					result += current.substring( currentIndex );
 					break;
 				}
+				// if we are debugging, throw out a missing variable error
+				if ( DEBUG )
+					System.out.println( "DEBUG (" + MessageTool.class.getName() + ") Variable not found: " +
+							current.substring( currentIndex, current.indexOf( ">", currentIndex + 1 ) ) );
 				// otherwise, add the previous segment..
 				result += current.substring( currentIndex, openingIndex );
 				// update the index to the end tag

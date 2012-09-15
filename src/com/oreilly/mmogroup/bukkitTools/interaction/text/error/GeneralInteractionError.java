@@ -8,7 +8,5 @@ public class GeneralInteractionError extends Exception {
 	
 	public GeneralInteractionError( String reason ) {
 		this.reason = reason;
-		// DEBUG:
-		System.out.println( "com.oreilly.mmogroup.bukkitTools ERROR: General display error: " + reason );
 	}
 }

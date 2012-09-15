@@ -19,8 +19,9 @@ public class Choice {
 			this.text = text + "\n";
 	}
 	
+	
 	public Choice withAlias( String... aliasList ) {
-		parent.withAlias(this, aliasList);
+		parent.withAlias( this, aliasList );
 		return this;
 	}
 }
@@ -55,5 +56,22 @@ class ChoiceAbort extends Choice {
 	
 	public ChoiceAbort( Choices parent, String text ) {
 		super( parent, text );
+	}
+}
+
+
+class ChoiceFailure extends Choice {
+	
+	public String message = null;
+	
+	
+	public ChoiceFailure( Choices parent, String text ) {
+		super( parent, text );
+	}
+	
+	
+	public ChoiceFailure withMessage( String message ) {
+		this.message = message;
+		return this;
 	}
 }

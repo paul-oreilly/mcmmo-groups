@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.formatter.Formatter;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.PaginationAssistant;
@@ -42,7 +43,8 @@ abstract public class InteractionPage {
 	
 	// variables
 	
-	public HashMap< String, Object > getVariables( Interaction interaction ) {
+	public HashMap< String, Object > getVariables( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		return null;
 	}
 	
@@ -68,7 +70,8 @@ abstract public class InteractionPage {
 	
 	// translations
 	
-	public String getTranslationKey( Interaction interaction ) {
+	public String getTranslationKey( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		if ( translationKey != null )
 			return translationKey;
 		else {
@@ -82,19 +85,21 @@ abstract public class InteractionPage {
 	
 	
 	// for times when the entire message may change depending on context
-	public String getCustomTranslationKey( Interaction interaction ) {
+	public String getCustomTranslationKey( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		return null;
 	}
 	
 	
 	// Title functions
 	
-	public String titleOverrideKey( Interaction interaction ) {
+	public String titleOverrideKey( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		return getTranslationKey( interaction ) + ".titleOverride";
 	}
 	
 	
-	public String getTitle( Interaction interaction ) {
+	public String getTitle( Interaction interaction ) throws PageFailure, ContextDataRequired, GeneralInteractionError {
 		Object overrideObj = interaction.context.get( titleOverrideKey( interaction ) );
 		if ( overrideObj != null )
 			return overrideObj.toString();
@@ -108,7 +113,7 @@ abstract public class InteractionPage {
 	
 	
 	public String getDisplayText( Interaction interaction ) throws ContextDataRequired,
-			GeneralInteractionError, AbortInteraction {
+			GeneralInteractionError, AbortInteraction, PageFailure {
 		// TOOD: Pagination support...
 		// see if we have an active paginator
 		PaginationAssistant paginator = interaction.getContextData(
@@ -124,7 +129,7 @@ abstract public class InteractionPage {
 				String text = generateDisplayBody( interaction ) + "\n";
 				String choiceText = interaction.parseMessage(
 						StringUtils.join( choices.generateChoiceList(), "" ) );
-				if ( text.split( "\n" ).length + choiceText.split( "\n" ).length + 1> maxLines ) {
+				if ( text.split( "\n" ).length + choiceText.split( "\n" ).length + 1 > maxLines ) {
 					// we'll need a paginator
 					paginator = new PaginationAssistant( choiceText, maxLines, text );
 					interaction.context.put( getTranslationKey( interaction ) + "_paginator", paginator );
@@ -145,12 +150,13 @@ abstract public class InteractionPage {
 	
 	
 	public Choices generateChoices( Interaction interaction ) throws ContextDataRequired,
-			GeneralInteractionError, AbortInteraction {
+			GeneralInteractionError, AbortInteraction, PageFailure {
 		return null;
 	}
 	
 	
-	public String generateDisplayBody( Interaction interaction ) {
+	public String generateDisplayBody( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		String text = null;
 		if ( translatableBody )
 			text = VariableTool.variable( getTranslationKey( interaction ) + ".text" );
@@ -166,14 +172,14 @@ abstract public class InteractionPage {
 	
 	
 	public String inputHandler( Interaction interaction, Object data ) throws ContextDataRequired,
-			GeneralInteractionError, AbortInteraction {
+			GeneralInteractionError, AbortInteraction, PageFailure {
 		// first, check for pagination...
 		PaginationAssistant paginator = interaction.getContextData(
 				PaginationAssistant.class, interaction, getTranslationKey( interaction ) + "_paginator" );
 		if ( paginator != null ) {
 			boolean paginationCommand = paginator.processPageCommand( data.toString() );
 			if ( paginationCommand ) {
-				interaction.pageWaitingForInput = true;
+				interaction.holdInteraction = true;
 				return null;
 			} else {
 				// it wasn't a pagination command, so we kill the paginator
@@ -195,7 +201,7 @@ abstract public class InteractionPage {
 	// Direct Input model:
 	// if a string is returned, it is shown to the player
 	public String acceptValidatedInput( Interaction interaction, Object data ) throws ContextDataRequired,
-			GeneralInteractionError, AbortInteraction {
+			GeneralInteractionError, AbortInteraction, PageFailure {
 		return null;
 	}
 	
@@ -203,7 +209,7 @@ abstract public class InteractionPage {
 	// Choice model:
 	// as above, a string return is shown to the player
 	public String takeAction( Interaction interaction, String key ) throws ContextDataRequired,
-			GeneralInteractionError, AbortInteraction {
+			GeneralInteractionError, AbortInteraction, PageFailure {
 		return null;
 	}
 	

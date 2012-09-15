@@ -7,6 +7,9 @@ import org.bukkit.ChatColor;
 
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 
 
 // TODO: Interface with style's based on context data
@@ -76,7 +79,8 @@ public class Border extends Formatter {
 	
 	
 	@Override
-	protected String format( String s, InteractionPage page, Interaction interaction ) {
+	protected String format( String s, InteractionPage page, Interaction interaction ) throws PageFailure,
+			ContextDataRequired, GeneralInteractionError {
 		String result = "";
 		HashMap< String, String > characterStyles = getCharacterStyles( page );
 		HashMap< String, String > colorStyles = getChatColorStyles( page );

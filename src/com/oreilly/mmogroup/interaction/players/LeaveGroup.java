@@ -5,7 +5,11 @@ import java.util.HashMap;
 import com.oreilly.mmogroup.api.PlayerAPI;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.Interaction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 
@@ -27,23 +31,23 @@ public class LeaveGroup extends InteractionPage {
 	
 	
 	@Override
-	public Choices generateChoices( Interaction interaction ) {
+	public Choices generateChoices( Interaction interaction ) throws PageFailure, ContextDataRequired,
+			GeneralInteractionError {
 		Choices choices = new Choices( this, interaction );
-		choices.addInternalChoice( "Yes, I'm sure.", "yes" );
-		choices.addInternalChoice( "Cancel", "cancel" );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
+		choices.addInternalChoice( variable.define( "confirm" ), "yes" );
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	
 	
 	@Override
 	public String takeAction( Interaction interaction, String choice ) {
-		if ( choice.contentEquals( "cancel" ) )
-			return null;
 		if ( choice.contentEquals( "yes" ) ) {
 			PlayerHelper helper = new PlayerHelper( interaction );
 			try {
 				PlayerAPI.leaveGroup( helper.playerRecord );
-				return null; //TODO: Later, a message.
+				return "You are no longer a part of any group";
 			} catch ( PluginNotEnabled e ) {
 				e.printStackTrace();
 			}

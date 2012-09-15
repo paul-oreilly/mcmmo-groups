@@ -10,7 +10,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.interaction.Constants;
 import com.oreilly.mmogroup.interaction.helpers.GroupHelper;
 
@@ -25,9 +27,10 @@ public class GroupSelectSpeciality extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
 		GroupHelper helper = new GroupHelper( interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		// list all the skills for which this group doesn't have an existing bonus
 		List< String > existingSpecial = helper.record.getSpecialityNames();
 		for ( String name : existingSpecial ) {
@@ -36,7 +39,7 @@ public class GroupSelectSpeciality extends InteractionPage {
 							")", name );
 		}
 		// add a 'cancel' choice as well
-		choices.addInternalChoice( "Cancel", "cancel" );
+		choices.addCancel( variable.define( "cancel" ) );
 		return choices;
 	}
 	
@@ -50,8 +53,6 @@ public class GroupSelectSpeciality extends InteractionPage {
 	
 	@Override
 	public String takeAction( Interaction interaction, String input ) throws GeneralInteractionError {
-		if ( input.equalsIgnoreCase( "cancel" ) )
-			return null;
 		interaction.context.put( Constants.SELECTED_GROUP_SPECIAL, input );
 		return "Selected " + input.toLowerCase();
 	}

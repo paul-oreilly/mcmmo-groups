@@ -8,7 +8,9 @@ import com.oreilly.mmogroup.bukkitTools.interaction.text.InteractionPage;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.AbortInteraction;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.ContextDataRequired;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.error.GeneralInteractionError;
+import com.oreilly.mmogroup.bukkitTools.interaction.text.error.PageFailure;
 import com.oreilly.mmogroup.bukkitTools.interaction.text.helpers.Choices;
+import com.oreilly.mmogroup.bukkitTools.text.VariablePrefixer;
 import com.oreilly.mmogroup.errors.PluginNotEnabled;
 import com.oreilly.mmogroup.interaction.helpers.PlayerHelper;
 
@@ -51,12 +53,14 @@ public class ChangePlayersSpecialisation extends InteractionPage {
 	
 	@Override
 	public Choices generateChoices( Interaction interaction ) throws AbortInteraction, ContextDataRequired,
-			GeneralInteractionError {
+			GeneralInteractionError, PageFailure {
 		Choices choices = new Choices( this, interaction );
+		VariablePrefixer variable = new VariablePrefixer( this, interaction );
 		PlayerHelper helper = PlayerHelper.fromSelectedPlayer( interaction );
 		for ( String name : helper.getEligableSpecialityOptions() )
 			choices.addInternalChoice( name, name )
 					.withAlias( name.toLowerCase() );
+		choices.addFail( variable.define( "cancel" ) );
 		return choices;
 	}
 	
